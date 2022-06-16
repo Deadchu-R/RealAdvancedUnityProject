@@ -499,7 +499,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HP: 0
   attackPower: 0
-  moveSpeed: 1
+  moveSpeed: 400
   rigidBody: {fileID: 778642780}
 --- !u!1 &823800046 stripped
 GameObject:

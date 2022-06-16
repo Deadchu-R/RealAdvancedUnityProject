@@ -7,14 +7,13 @@ using UnityEngine.PlayerLoop;
 public class PlayerController : MonoBehaviour
 {
 
+    private Vector2 move;
+    
    [SerializeField] private int HP;
     [SerializeField] private int attackPower;
-    [SerializeField] private float moveSpeed = 1;
+    [SerializeField] private float moveSpeed = 200;
     [SerializeField] private Rigidbody2D rigidBody;
-    private int currentHP;
-    private float horizontalMove = 0;
-    private Vector3 MoveVector3;
-    private Vector2 moveDirection = Vector2.zero;
+ 
 
     private void Update()
     {
@@ -34,13 +33,13 @@ public class PlayerController : MonoBehaviour
 
     private void Move()
     {
-        float MoveX = Input.GetAxis("Horizontal");
-        moveDirection = new Vector2(MoveX, 0).normalized;
+        move = new Vector2(Input.GetAxisRaw("Horizontal"), rigidBody.velocity.y);
 
     }
 
     private void FixedUpdate()
     {
-        rigidBody.velocity = new Vector2(moveDirection.x * moveSpeed, 0);
+        // rigidBody.AddForce(move * moveSpeed * Time.deltaTime);
+        rigidBody.velocity =  move * moveSpeed * Time.deltaTime;
     }
 }
