@@ -10,50 +10,101 @@ public class SubMenuBehaviors : MonoBehaviour
     public GameObject startSub;
     public GameObject optionSub;
     public GameObject subMenu;
-    public int Start = 0;
-    public int Options = 0;
-    public float animDuration;
+    public GameObject masterSlider;
+    public GameObject musicSlider;
+    public GameObject SFXSlider;
+    private bool start = false;
+    private bool options = false;
+    private bool masterSlideOn = false;
+    private bool musicSlideOn = false;
+    private bool SFXSlideOn = false;
+    private float animDuration = 1;
 
     public void StartSubMenu()
     {
-        if (Start == 0)
+        if (start == false)
         {
             startSub.SetActive(true);
             startsubMenu.DOMoveX(1270, animDuration);
-            Start++;
+            start = true;
         }
-        else if (Start == 1)
+        else if (start == true)
         {
             Sequence seq = DOTween.Sequence();
             seq.Append(startsubMenu.DOMoveX(970, animDuration));
             seq.OnComplete(ShutDown);
-            Start--;
+            start = false;
         }
     }
 
     public void OptionsSubMenu()
     {
-        if (Options == 0)
+        if (options == false)
         {
             optionSub.SetActive(true);
             optionSubMenu.DOMoveX(1270, animDuration);
-            Options++;
+            options = true;
         }
-        else if (Options == 1)
+        else if (options == true)
         {
+            masterSlider.SetActive(false);
+            musicSlider.SetActive(false);
+            SFXSlider.SetActive(false);
             Sequence seq2 = DOTween.Sequence();
             seq2.Append(optionSubMenu.DOMoveX(970, animDuration));
             seq2.OnComplete(ShutDown);
-            Options--;
+            options = false;
         }
     }
-
-
     private void ShutDown()
     {
         startSub.SetActive(false);    
         optionSub.SetActive(false);
     }
+
+    public void MasterSlide()
+    {
+        if (masterSlideOn == false )
+        {
+            masterSlider.SetActive(true);
+            masterSlideOn = true;
+        }
+        else if (masterSlideOn == true)
+        {
+            masterSlider.SetActive(false);
+            masterSlideOn = false;
+        }
+        
+    }
+
+    public void MusicSlide()
+    {
+        if (musicSlideOn == false)
+        {
+            musicSlider.SetActive(true);
+            musicSlideOn = true;
+        }
+        else if (musicSlideOn == true)
+        {
+            musicSlider.SetActive(false);
+            musicSlideOn = false;
+        }
+    }
+
+    public void SFXSlide()
+    {
+        if (SFXSlideOn == false)
+        {
+            SFXSlider.SetActive(true);
+            SFXSlideOn = true;
+        }
+        else if (SFXSlideOn == true)
+        {
+            SFXSlider.SetActive(false);
+            SFXSlideOn = false;
+        }
+    }
+
 
     //IEnumerator StartMenuDelay()
     //{
