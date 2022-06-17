@@ -503,15 +503,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29ed1d6d0a390243b60ad258d8c9d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isJumping: 0
-  HP: 0
+  health: 0
   attackPower: 0
   moveSpeed: 1
   rigidBody: {fileID: 778642780}
-  groundLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  jumpForce: 2
+  jumpTimes: 2
+  jumpForce: 10
   polyCol: {fileID: 778642781}
 --- !u!61 &778642783
 BoxCollider2D:
@@ -526,7 +523,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.21402009, y: -0.3120314}
+  m_Offset: {x: -0.21402009, y: -0.31520963}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -537,7 +534,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.21497121, y: 0.01827526}
+  m_Size: {x: 0.21497121, y: 0.024631739}
   m_EdgeRadius: 0
 --- !u!1 &823800046 stripped
 GameObject:

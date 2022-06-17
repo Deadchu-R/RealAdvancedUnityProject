@@ -7,85 +7,115 @@ using UnityEngine.PlayerLoop;
 public class PlayerController : MonoBehaviour
 {
 
-    private Vector2 move;
-    [SerializeField] private bool isJumping = false;
-
-    private float moveHorizontal;
-    private float moveVertical;
+    private bool _isJumping = false;
+    private float _moveHorizontal;
+    private float _moveVertical;
+    private int _remainingJumps;
+    private bool _jumpInUse = false;
     
-    [SerializeField] private int HP;
+    [SerializeField] private int health;
     [SerializeField] private int attackPower;
     [SerializeField] private float moveSpeed = 200;
     [SerializeField] private Rigidbody2D rigidBody;
-    [SerializeField] public LayerMask groundLayers;
+    [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private PolygonCollider2D polyCol;
 
-    private void Update()
+    private void Awake()
     {
-        moveHorizontal = Input.GetAxisRaw("Horizontal");
-        moveVertical = Input.GetAxisRaw("Vertical");
-        
-        
-        Inputs();
+        _remainingJumps = jumpTimes;
     }
 
+    private void FixedUpdate()
+    {
+        Inputs();
+        
+    }
     private void Inputs()
     {
         Move();
         Jump();
     }
 
+    private void Move()
+    {
+        _moveHorizontal = Input.GetAxisRaw("Horizontal");
+        
+        if (_moveHorizontal > 0.1f || _moveHorizontal < -0.1f)
+        {
+            rigidBody.AddForce(new Vector2(_moveHorizontal * moveSpeed, 0f), ForceMode2D.Impulse);
+        }
+    }
     private void Jump()
     {
+        _moveVertical = Input.GetAxisRaw("Jump") ;
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetAxisRaw("Jump") == 1)
         {
-            rigidBody.AddForce(Vector2.up * jumpForce * Time.deltaTime, ForceMode2D.Impulse);
+            if (_jumpInUse == false)
+            {
+                _jumpInUse = true;
+            }
+            else if (Input.GetAxisRaw("Jump") == -1)
+            {
+                if (_jumpInUse == false)
+                {
+                    _jumpInUse = true;
+                }
+            }
+        }
+        if (  _moveVertical >= 0.1f )
+        {
+            if (!_isJumping)
+            {
+                rigidBody.velocity = new Vector2(0f, 0f);
+             rigidBody.AddForce(new Vector2(0f ,_moveVertical * jumpForce), ForceMode2D.Impulse);
+                _moveVertical = 0f;
+                
+            }
+            else
+            {
+                if (_remainingJumps > 0 )
+                {
+                    _remainingJumps--;
+                    rigidBody.velocity = new Vector2(0f, 0f);
+                    rigidBody.AddForce(new Vector2(0f ,_moveVertical * jumpForce), ForceMode2D.Impulse);
+              
+                }
+            }
+
         }
 
-        // if (Input.GetAxisRaw("Jump")) 
+        if (_remainingJumps <= 0)
+        {
+            Debug.Log("out of jumps");
+            // rigidBody.AddForce(new Vector2(0f ,_moveVertical * jumpForce), ForceMode2D.Impulse);      
+        }
+
+      
+
     }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
         
-        if (col.gameObject.tag == "Platform")
+        if (col.gameObject.CompareTag("Platform"))
         {
-            isJumping = false;
+            _isJumping = false;
+            _remainingJumps = jumpTimes;
+            Debug.Log($"refilled jumps to {_remainingJumps}");
             Debug.Log("Enter");
         }
     }
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if (col.gameObject.tag == "Platform")
+        if (col.gameObject.CompareTag("Platform"))
         {
-            // isJumping = true;
+             _isJumping = true;
             Debug.Log("Exit");
         }
     }
 
-    private void Move()
-    {
-        // move = new Vector2(Input.GetAxisRaw("Horizontal"), rigidBody.velocity.y);
-        
-        // move = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Jump"));
-    }
 
-    private void FixedUpdate()
-    {
-     
-        // rigidBody.velocity =  move * moveSpeed * Time.deltaTime;
-
-        if (moveHorizontal > 0.1f || moveHorizontal < -0.1f)
-        {
-            rigidBody.AddForce(new Vector2(moveHorizontal * moveSpeed, 0f), ForceMode2D.Impulse);
-        }
-
-        if (!isJumping && moveVertical > 0.1f)
-        {
-            rigidBody.AddForce(new Vector2(0f ,moveVertical * jumpForce), ForceMode2D.Impulse);
-        }
-    }
 }
