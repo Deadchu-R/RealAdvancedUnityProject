@@ -2,16 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class PauseMenu : MonoBehaviour
 {
     public static bool GameIsPaused = false; // bool the check if game is pause 
-
     public GameObject pauseMenuUI; // setting gameObject "pauseMenuUI" in the script
-
     public GameObject SaveLoadSubMenu;
-
-    public GameObject OptionsSubMenu;
+    public Transform optionSubMenu;
+    public GameObject optionSub;
+    public GameObject subMenu;
+    public GameObject masterSlider;
+    public GameObject musicSlider;
+    public GameObject SFXSlider;
+    private bool optionsOn = false;
+    private bool masterSlideOn = false;
+    private bool musicSlideOn = false;
+    private bool SFXSlideOn = false;
+    private float animDuration = 1;
 
     void Update()
     {
@@ -53,37 +61,74 @@ public class PauseMenu : MonoBehaviour
         Debug.Log("Game is Paused"); // debuging
     }
 
-    // a method to ExitGame
-    public void ExitGame()
+
+    public void OptionsSubMenu()
     {
-        Application.Quit(); // will exit the game
-        Debug.Log("Game Closed"); //Debug
-        SceneManager.LoadScene("MainMenu"); // will load the MainMenu Scene
+        if (optionsOn == false)
+        {
+            optionSub.SetActive(true);
+            optionSubMenu.DOMoveX(1270, animDuration);
+            optionsOn = true;
+        }
+        else if (optionsOn == true)
+        {
+            masterSlider.SetActive(false);
+            musicSlider.SetActive(false);
+            SFXSlider.SetActive(false);
+            Sequence seq2 = DOTween.Sequence();
+            seq2.Append(optionSubMenu.DOMoveX(970, animDuration));
+            seq2.OnComplete(ShutDown);
+            optionsOn = false;
+        }
+    }
+    private void ShutDown()
+    {
+        optionSub.SetActive(false);
     }
 
-    public void SaveAndLoadSubMenu()
+    public void MasterSlide()
     {
-        if (!SaveLoadSubMenu.activeSelf)
+        if (masterSlideOn == false)
         {
-            SaveLoadSubMenu.SetActive(true);
+            masterSlider.SetActive(true);
+            masterSlideOn = true;
         }
-        else
+        else if (masterSlideOn == true)
         {
-            SaveLoadSubMenu.SetActive(false);
+            masterSlider.SetActive(false);
+            masterSlideOn = false;
+        }
+
+    }
+
+    public void MusicSlide()
+    {
+        if (musicSlideOn == false)
+        {
+            musicSlider.SetActive(true);
+            musicSlideOn = true;
+        }
+        else if (musicSlideOn == true)
+        {
+            musicSlider.SetActive(false);
+            musicSlideOn = false;
         }
     }
 
-    public void OptionSubMenu()
+    public void SFXSlide()
     {
-        if (!OptionsSubMenu.activeSelf)
+        if (SFXSlideOn == false)
         {
-            OptionsSubMenu.SetActive(true);
+            SFXSlider.SetActive(true);
+            SFXSlideOn = true;
         }
-        else
+        else if (SFXSlideOn == true)
         {
-            OptionsSubMenu.SetActive(false);
+            SFXSlider.SetActive(false);
+            SFXSlideOn = false;
         }
     }
+
 }
 
 

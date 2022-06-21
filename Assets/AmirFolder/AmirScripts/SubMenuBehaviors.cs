@@ -53,6 +53,7 @@ public class SubMenuBehaviors : MonoBehaviour
             Sequence seq2 = DOTween.Sequence();
             seq2.Append(optionSubMenu.DOMoveX(970, animDuration));
             seq2.OnComplete(ShutDown);
+
             options = false;
         }
     }

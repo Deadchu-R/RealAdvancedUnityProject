@@ -208,7 +208,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1505383167}
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
-        m_MethodName: LevelLoader
+        m_MethodName: FirstStage
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -380,7 +380,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 297449366}
-  - component: {fileID: 297449367}
   m_Layer: 0
   m_Name: OptionsSubMenu
   m_TagString: Untagged
@@ -405,26 +404,6 @@ Transform:
   m_Father: {fileID: 689294451}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &297449367
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 297449365}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4dc0a8fc54202494682317865381a55b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  startsubMenu: {fileID: 0}
-  optionSubMenu: {fileID: 0}
-  startSub: {fileID: 0}
-  optionSub: {fileID: 0}
-  subMenu: {fileID: 297449365}
-  masterSlider: {fileID: 0}
-  musicSlider: {fileID: 0}
-  SFXSlider: {fileID: 0}
 --- !u!1 &337002643
 GameObject:
   m_ObjectHideFlags: 0
