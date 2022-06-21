@@ -4,40 +4,48 @@ using UnityEngine;
 
 public class enemyBehaviour : MonoBehaviour
 {
-    #region Public var
-    
-    public float attackDistance;  //minimum distance for attack
-    public float moveSpeed;
-    public float timer; // timer for cooldown attacks
-    public Transform leftLimit;
-    public Transform rightLimit;
-    [HideInInspector] public Transform target;
-    [HideInInspector] public bool inRange; // check if Player is in range;
+    private bool IsDead;
+    [SerializeField] private float attackDistance;  //minimum distance for attack
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private float timer; // timer for cooldown attacks
+    [SerializeField] private Transform leftLimit;
+    [SerializeField] private Transform rightLimit;
     public GameObject hotZone;
     public GameObject triggerArea;
-
-    #endregion
-
-    #region Private var
+    [HideInInspector] public Transform target;
+    [HideInInspector] public bool inRange; // check if Player is in range;
     private Animator anim;
     private float distance;  // Store the distance betwn enemy & player
     private bool attackMode;
     private bool cooling; // Check if Enemy is cooling after attack
     private float intTimer;
-    #endregion
+    [SerializeField] private float destroyTimer;
+    
+    [SerializeField] private int HP = 5;
+    private int currentHP;
+    public float attackDamage;
+
+    
 
     private void Awake()
     {
+        IsDead = false;
+        currentHP = HP;
         SelectTarget();
+
         intTimer = timer; //Store the inital value of timer
         anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        if(!attackMode)
+        if (!IsDead)
         {
-            Move();
+            if (!attackMode)
+            {
+                Move();
+            }
+
         }
 
         if(!InsideOfLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack-A1"))
@@ -52,14 +60,37 @@ public class enemyBehaviour : MonoBehaviour
         {
             EnemyLogic();
         }
+
+        if (currentHP <= 0)
+        {
+            Died();
+
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            TakeDamage(1);
+        }
     }
 
 
+    public void TakeDamage(int dmg)
+    {
+        currentHP -= dmg;
+        Debug.Log($"Enemy curreny HP is {currentHP}");
+
+    }
     
-
-
-
-
+    private void Died()
+    {
+        IsDead = true;
+        //anim.SetBool("IsDead", true);
+        anim.SetBool("Attack", false);
+        anim.SetBool("canWalk", false);
+        anim.Play("Enemy_Dead");
+        Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
+    }
+   
     void EnemyLogic()
     {
         distance = Vector2.Distance(transform.position, target.position);
