@@ -352,7 +352,7 @@ Animator:
   m_GameObject: {fileID: 778642776}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6455df3ea9550024d9d6a57007d9e5b8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 577c6f97cc4f1de4e963325a7cba97b3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -503,12 +503,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29ed1d6d0a390243b60ad258d8c9d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  attackPower: 0
+  playerAni: {fileID: 778642777}
+  HP: 10
+  attackPower: 5
   moveSpeed: 1
   rigidBody: {fileID: 778642780}
   jumpTimes: 2
-  jumpForce: 10
+  jumpForce: 15
   polyCol: {fileID: 778642781}
 --- !u!61 &778642783
 BoxCollider2D:

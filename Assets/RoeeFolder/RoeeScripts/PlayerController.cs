@@ -6,14 +6,18 @@ using UnityEngine.PlayerLoop;
 
 public class PlayerController : MonoBehaviour
 {
-
-    private bool _isJumping = false;
-    private float _moveHorizontal;
-    private float _moveVertical;
-    private int _remainingJumps;
-    private bool _jumpInUse = false;
     
-    [SerializeField] private int health;
+    private bool _grounded = false;
+    private bool _moreJump = false;
+    private bool _doJump = false;
+    private bool _shieldUp = false;
+    private float _moveHorizontal;
+    private int _remainingJumps;
+    private int _currentHP;
+ 
+     
+    [SerializeField] private Animator playerAni;
+    [SerializeField] private int HP;
     [SerializeField] private int attackPower;
     [SerializeField] private float moveSpeed = 200;
     [SerializeField] private Rigidbody2D rigidBody;
@@ -24,17 +28,60 @@ public class PlayerController : MonoBehaviour
     private void Awake()
     {
         _remainingJumps = jumpTimes;
+        _currentHP = HP;
+    }
+
+    private void Update()
+    {
+        Testing();
+        Inputs();
+    }
+
+    private void Inputs()
+    {
+        if (Input.GetButtonDown("Shield"))
+        {
+            _shieldUp = true;
+        }
+
+        if (Input.GetButtonDown("Jump"))
+        {
+            if (_remainingJumps > 0)
+            { 
+                _moreJump = true;
+                _remainingJumps--;
+            }
+            else
+            {
+                _moreJump = false;
+            }
+            _doJump = true;
+        }
+        
     }
 
     private void FixedUpdate()
     {
-        Inputs();
-        
+        Actions();
     }
-    private void Inputs()
+    private void Actions()
     {
+        ShieldBlock();
         Move();
         Jump();
+    }
+
+    private void ShieldBlock()
+    {
+        if (_shieldUp == true)
+        {
+          
+         playerAni.SetTrigger("Shield");
+         _shieldUp = false;
+         Debug.Log("shield");
+            
+        }
+
     }
 
     private void Move()
@@ -48,52 +95,60 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
-        _moveVertical = Input.GetAxisRaw("Jump") ;
-
-        if (Input.GetAxisRaw("Jump") == 1)
+        if (_doJump == true )
         {
-            if (_jumpInUse == false)
-            {
-                _jumpInUse = true;
-            }
-            else if (Input.GetAxisRaw("Jump") == -1)
-            {
-                if (_jumpInUse == false)
-                {
-                    _jumpInUse = true;
-                }
-            }
-        }
-        if (  _moveVertical >= 0.1f )
-        {
-            if (!_isJumping)
+            if (_grounded)
             {
                 rigidBody.velocity = new Vector2(0f, 0f);
-             rigidBody.AddForce(new Vector2(0f ,_moveVertical * jumpForce), ForceMode2D.Impulse);
-                _moveVertical = 0f;
-                
+                rigidBody.AddForce(new Vector2(0f , jumpForce), ForceMode2D.Impulse);
             }
             else
             {
-                if (_remainingJumps > 0 )
+                if (_moreJump == true)
                 {
-                    _remainingJumps--;
                     rigidBody.velocity = new Vector2(0f, 0f);
-                    rigidBody.AddForce(new Vector2(0f ,_moveVertical * jumpForce), ForceMode2D.Impulse);
-              
+                    rigidBody.AddForce(new Vector2(0f ,jumpForce), ForceMode2D.Impulse);
+                    Debug.Log($"remaining jumps: {_remainingJumps}");
                 }
             }
-
+            _doJump = false;
         }
+
+ 
 
         if (_remainingJumps <= 0)
         {
             Debug.Log("out of jumps");
-            // rigidBody.AddForce(new Vector2(0f ,_moveVertical * jumpForce), ForceMode2D.Impulse);      
+             
         }
 
       
 
+    }
+
+    private void Testing()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Damage(5);
+        }
+    }
+
+    public void Damage(int dmg)
+    {
+        _currentHP -= dmg;
+        Debug.Log($"got:{dmg} dmg");
+
+        if (_currentHP <= 0)
+        {
+            Died();
+        }
+    }
+
+    private void Died()
+    {
+        Debug.Log("Died");
+        Destroy(this.gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D col)
@@ -101,19 +156,17 @@ public class PlayerController : MonoBehaviour
         
         if (col.gameObject.CompareTag("Platform"))
         {
-            _isJumping = false;
+            _grounded = true;
             _remainingJumps = jumpTimes;
             Debug.Log($"refilled jumps to {_remainingJumps}");
-            Debug.Log("Enter");
         }
     }
-
+    
     private void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Platform"))
         {
-             _isJumping = true;
-            Debug.Log("Exit");
+             _grounded = false;
         }
     }
 
