@@ -70,3 +70,6 @@ crashlytics-build.properties
 *.meta
 *.meta
 *.meta
+*.meta
+ #Ignore all .meta file
+ *.meta
