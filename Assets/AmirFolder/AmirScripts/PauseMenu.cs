@@ -12,13 +12,16 @@ public class PauseMenu : MonoBehaviour
     public Transform optionSubMenu;
     public GameObject optionSub;
     public GameObject subMenu;
+
     public GameObject masterSlider;
     public GameObject musicSlider;
     public GameObject SFXSlider;
+
     private bool optionsOn = false;
     private bool masterSlideOn = false;
     private bool musicSlideOn = false;
     private bool SFXSlideOn = false;
+
     private float animDuration = 1;
 
     void Update()
@@ -58,7 +61,7 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(true); // setting pauseMenu to active
         Time.timeScale = 0; // pausing Time
         GameIsPaused = true; // setting bool GameIsPause to true
-        Debug.Log("Game is Paused"); // debuging
+        Debug.Log("Game is Paused"); // debugging
     }
 
 
@@ -67,7 +70,7 @@ public class PauseMenu : MonoBehaviour
         if (optionsOn == false)
         {
             optionSub.SetActive(true);
-            optionSubMenu.DOMoveX(1270, animDuration);
+            optionSubMenu.DOMoveX(1270, animDuration).SetUpdate(true);
             optionsOn = true;
         }
         else if (optionsOn == true)
@@ -76,7 +79,7 @@ public class PauseMenu : MonoBehaviour
             musicSlider.SetActive(false);
             SFXSlider.SetActive(false);
             Sequence seq2 = DOTween.Sequence();
-            seq2.Append(optionSubMenu.DOMoveX(970, animDuration));
+            seq2.Append(optionSubMenu.DOMoveX(970, animDuration)).SetUpdate(true);
             seq2.OnComplete(ShutDown);
             optionsOn = false;
         }

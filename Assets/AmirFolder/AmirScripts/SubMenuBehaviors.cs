@@ -7,17 +7,23 @@ public class SubMenuBehaviors : MonoBehaviour
 {
     public Transform startsubMenu;
     public Transform optionSubMenu;
+
+    public GameObject mainMenu;
+    public GameObject controlMenu;
     public GameObject startSub;
     public GameObject optionSub;
     public GameObject subMenu;
+
     public GameObject masterSlider;
     public GameObject musicSlider;
     public GameObject SFXSlider;
+
     private bool start = false;
     private bool options = false;
     private bool masterSlideOn = false;
     private bool musicSlideOn = false;
     private bool SFXSlideOn = false;
+
     private float animDuration = 1;
 
     public void StartSubMenu()
@@ -25,7 +31,7 @@ public class SubMenuBehaviors : MonoBehaviour
         if (start == false)
         {
             startSub.SetActive(true);
-            startsubMenu.DOMoveX(1270, animDuration);
+            startsubMenu.DOMoveX(1280, animDuration);
             start = true;
         }
         else if (start == true)
@@ -42,7 +48,7 @@ public class SubMenuBehaviors : MonoBehaviour
         if (options == false)
         {
             optionSub.SetActive(true);
-            optionSubMenu.DOMoveX(1270, animDuration);
+            optionSubMenu.DOMoveX(1280, animDuration);
             options = true;
         }
         else if (options == true)
@@ -104,6 +110,18 @@ public class SubMenuBehaviors : MonoBehaviour
             SFXSlider.SetActive(false);
             SFXSlideOn = false;
         }
+    }
+
+    public void EnterControlMenu()
+    {
+        mainMenu.SetActive(false);
+        controlMenu.SetActive(true);
+    }
+
+    public void ExitControlMenu()
+    {
+        controlMenu.SetActive(false);
+        mainMenu.SetActive(true);
     }
 
 
