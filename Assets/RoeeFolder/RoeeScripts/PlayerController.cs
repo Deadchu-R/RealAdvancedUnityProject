@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int HP;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
-    [SerializeField] private int attackPower;
+    [SerializeField] private int attackDamage;
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private PolygonCollider2D polyCol;
@@ -85,7 +85,6 @@ public class PlayerController : MonoBehaviour
             { 
                 _moreJump = true;
                 _remainingJumps--;
-                // Debug.Log($"remaining jumps: {_remainingJumps}");
             }
             else
             {
