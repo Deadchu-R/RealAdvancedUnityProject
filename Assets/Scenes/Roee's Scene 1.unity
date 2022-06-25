@@ -503,14 +503,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e29ed1d6d0a390243b60ad258d8c9d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAni: {fileID: 778642777}
   HP: 10
+  walkSpeed: 0.5
+  runSpeed: 1
   attackPower: 5
-  moveSpeed: 1
-  rigidBody: {fileID: 778642780}
   jumpTimes: 2
   jumpForce: 15
   polyCol: {fileID: 778642781}
+  playerAni: {fileID: 778642777}
+  attackAnimations:
+  - {fileID: 7400000, guid: c9a5ec1d72f77a843b1b95ea85d8b549, type: 2}
+  - {fileID: 7400000, guid: e4b7634f0406ed442a176dfdbdf6c28a, type: 2}
+  - {fileID: 7400000, guid: 600140c6cd940c9439aeac757f0cc6e9, type: 2}
+  - {fileID: 7400000, guid: e5ef72307ec5c1545aaaf02a31c3f955, type: 2}
+  rigidBody: {fileID: 778642780}
 --- !u!61 &778642783
 BoxCollider2D:
   m_ObjectHideFlags: 0

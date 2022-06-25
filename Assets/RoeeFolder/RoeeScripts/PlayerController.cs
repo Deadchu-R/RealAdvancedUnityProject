@@ -11,22 +11,28 @@ public class PlayerController : MonoBehaviour
     private bool _moreJump = false;
     private bool _doJump = false;
     private bool _shieldUp = false;
+    private bool _attack = false;
     private float _moveHorizontal;
     private int _remainingJumps;
     private int _currentHP;
- 
-     
-    [SerializeField] private Animator playerAni;
+    private int _attackNum = 0;
+    private float _moveSpeed = 1;
+
+
     [SerializeField] private int HP;
+    [SerializeField] private float walkSpeed;
+    [SerializeField] private float runSpeed;
     [SerializeField] private int attackPower;
-    [SerializeField] private float moveSpeed = 200;
-    [SerializeField] private Rigidbody2D rigidBody;
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private PolygonCollider2D polyCol;
+    [SerializeField] private Animator playerAni;
+    [SerializeField] private AnimationClip[] attackAnimations;
+    [SerializeField] private Rigidbody2D rigidBody;
 
     private void Awake()
     {
+        
         _remainingJumps = jumpTimes;
         _currentHP = HP;
     }
@@ -39,17 +45,47 @@ public class PlayerController : MonoBehaviour
 
     private void Inputs()
     {
+        if (Input.GetButtonDown("Attack"))
+        {
+            if (_attackNum >= attackAnimations.Length)
+            {
+                _attackNum = 1;
+            }
+            else
+            {
+                _attackNum++;
+            }
+            _attack = true;
+        }
         if (Input.GetButtonDown("Shield"))
         {
             _shieldUp = true;
         }
-
+        if (Input.GetButton("Horizontal"))
+        {
+            playerAni.SetBool("Walking", true);
+        }
+        if (!Input.GetButton("Horizontal"))
+        {
+            playerAni.SetBool("Walking", false);
+        }
+        if (Input.GetButton("Run"))
+        {
+            _moveSpeed = runSpeed;
+            playerAni.SetBool("Running", true);
+        }
+        if (!Input.GetButton("Run"))
+        {
+            _moveSpeed = walkSpeed;
+            playerAni.SetBool("Running", false);
+        }
         if (Input.GetButtonDown("Jump"))
         {
             if (_remainingJumps > 0)
             { 
                 _moreJump = true;
                 _remainingJumps--;
+                // Debug.Log($"remaining jumps: {_remainingJumps}");
             }
             else
             {
@@ -66,9 +102,21 @@ public class PlayerController : MonoBehaviour
     }
     private void Actions()
     {
+        Attack(_attackNum);
         ShieldBlock();
         Move();
         Jump();
+    }
+
+    private void Attack(int attackNumber)
+    {
+        if (_attack == true)
+        {
+            playerAni.SetTrigger("Attack");
+            playerAni.SetInteger("AttackState", attackNumber);
+            _attack = false;
+        }
+
     }
 
     private void ShieldBlock()
@@ -90,8 +138,9 @@ public class PlayerController : MonoBehaviour
         
         if (_moveHorizontal > 0.1f || _moveHorizontal < -0.1f)
         {
-            rigidBody.AddForce(new Vector2(_moveHorizontal * moveSpeed, 0f), ForceMode2D.Impulse);
+            rigidBody.AddForce(new Vector2(_moveHorizontal * _moveSpeed, 0f), ForceMode2D.Impulse);
         }
+        
     }
     private void Jump()
     {
@@ -108,22 +157,17 @@ public class PlayerController : MonoBehaviour
                 {
                     rigidBody.velocity = new Vector2(0f, 0f);
                     rigidBody.AddForce(new Vector2(0f ,jumpForce), ForceMode2D.Impulse);
-                    Debug.Log($"remaining jumps: {_remainingJumps}");
                 }
             }
+            playerAni.SetTrigger("Jumping");
             _doJump = false;
         }
-
- 
-
+        
         if (_remainingJumps <= 0)
         {
-            Debug.Log("out of jumps");
-             
+            
         }
-
-      
-
+        
     }
 
     private void Testing()
