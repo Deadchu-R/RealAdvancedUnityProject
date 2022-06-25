@@ -506,7 +506,7 @@ MonoBehaviour:
   HP: 10
   walkSpeed: 0.5
   runSpeed: 1
-  attackPower: 5
+  attackDamage: 3
   jumpTimes: 2
   jumpForce: 15
   polyCol: {fileID: 778642781}
