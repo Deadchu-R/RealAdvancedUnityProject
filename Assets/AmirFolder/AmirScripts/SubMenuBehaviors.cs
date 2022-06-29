@@ -13,6 +13,8 @@ public class SubMenuBehaviors : MonoBehaviour
     public GameObject startSub;
     public GameObject optionSub;
     public GameObject subMenu;
+    public GameObject keyboardControls;
+    public GameObject controllerControls;
 
     public GameObject masterSlider;
     public GameObject musicSlider;
@@ -123,6 +125,19 @@ public class SubMenuBehaviors : MonoBehaviour
         controlMenu.SetActive(false);
         mainMenu.SetActive(true);
     }
+
+    public void KeyboardControls()
+    {
+        keyboardControls.SetActive(true);
+        controllerControls.SetActive(false);
+    }
+    public void ControllerControls()
+    {
+        keyboardControls.SetActive(false);
+        controllerControls.SetActive(true);
+    }
+
+
 
 
     //IEnumerator StartMenuDelay()
