@@ -149,6 +149,7 @@ public class PlayerController : MonoBehaviour
             {
                 rigidBody.velocity = new Vector2(0f, 0f);
                 rigidBody.AddForce(new Vector2(0f , jumpForce), ForceMode2D.Impulse);
+                playerAni.SetTrigger("Jumping");
             }
             else
             {
@@ -156,9 +157,9 @@ public class PlayerController : MonoBehaviour
                 {
                     rigidBody.velocity = new Vector2(0f, 0f);
                     rigidBody.AddForce(new Vector2(0f ,jumpForce), ForceMode2D.Impulse);
+                  playerAni.SetTrigger("Jumping");
                 }
             }
-            playerAni.SetTrigger("Jumping");
             _doJump = false;
         }
         
