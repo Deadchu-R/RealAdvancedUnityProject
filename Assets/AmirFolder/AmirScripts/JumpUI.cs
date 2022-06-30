@@ -72,6 +72,6 @@ public class JumpUI : MonoBehaviour
     void updateTimer() // method for updating in-game timer
     {
         loseTimerSecs--;
-        loseTimerText.text = ":" + loseTimerSecs;
+        loseTimerText.text =  ":" + loseTimerSecs;
     }
 }
