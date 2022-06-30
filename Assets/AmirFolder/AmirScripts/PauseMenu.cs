@@ -54,6 +54,9 @@ public class PauseMenu : MonoBehaviour
         pauseMenuUI.SetActive(false); // setting the PauseMenu to not Active
         Time.timeScale = 1; // resuming Time
         GameIsPaused = false; // setting gameIsPaused bool to false 
+        optionSubMenu.DOMoveX(970, animDuration).SetUpdate(true);
+        ShutDown();
+        optionsOn = false;
         Debug.Log("Game is Resuming"); // debuging
     }
 

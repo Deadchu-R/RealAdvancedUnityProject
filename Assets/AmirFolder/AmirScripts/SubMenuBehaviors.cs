@@ -26,20 +26,20 @@ public class SubMenuBehaviors : MonoBehaviour
     private bool musicSlideOn = false;
     private bool SFXSlideOn = false;
 
-    private float animDuration = 1;
+    private float animDuration = 1.2f;
 
     public void StartSubMenu()
     {
         if (start == false)
         {
             startSub.SetActive(true);
-            startsubMenu.DOMoveX(1280, animDuration);
+            startsubMenu.DOMoveX(750, animDuration);
             start = true;
         }
         else if (start == true)
         {
             Sequence seq = DOTween.Sequence();
-            seq.Append(startsubMenu.DOMoveX(970, animDuration));
+            seq.Append(startsubMenu.DOMoveX(450, animDuration));
             seq.OnComplete(ShutDown);
             start = false;
         }
@@ -61,7 +61,6 @@ public class SubMenuBehaviors : MonoBehaviour
             Sequence seq2 = DOTween.Sequence();
             seq2.Append(optionSubMenu.DOMoveX(970, animDuration));
             seq2.OnComplete(ShutDown);
-
             options = false;
         }
     }
@@ -136,9 +135,6 @@ public class SubMenuBehaviors : MonoBehaviour
         keyboardControls.SetActive(false);
         controllerControls.SetActive(true);
     }
-
-
-
 
     //IEnumerator StartMenuDelay()
     //{

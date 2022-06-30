@@ -5,7 +5,13 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    int i = SceneManager.GetActiveScene().buildIndex;
+    int i;
+    private void Awake()
+    {
+        i = SceneManager.GetActiveScene().buildIndex;
+        //string activeScene = SceneManager.GetActiveScene().name;
+    }
+
     // method for levelLoading
     public void FirstStage() 
     {
@@ -40,5 +46,15 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(i + 1);
         Debug.Log("Next stage!");
+    }
+
+    public void LoadSave()
+    {
+
+    }
+
+    public void DeleteSave()
+    {
+
     }
 }
