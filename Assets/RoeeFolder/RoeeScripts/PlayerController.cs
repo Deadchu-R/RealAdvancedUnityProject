@@ -1,46 +1,71 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+// using System;
+// using System.Collections;
+// using System.Collections.Generic;
+// using UnityEngine.PlayerLoop;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class PlayerController : MonoBehaviour
 {
-    
-    private bool _grounded = false;
-    private bool _moreJump = false;
-    private bool _doJump = false;
-    private bool _shieldUp = false;
-    private bool _attack = false;
+    private bool _grounded = true;
+    private bool _canMove = true;
+   // private bool _pauseGravity = false;
+    private bool _moreJump;
+    private bool _doJump ;
+    private bool _shieldUp;
+    private bool _attack;
     private float _moveHorizontal;
     private int _remainingJumps;
-    private int _currentHP;
-    private int _attackNum = 0;
+    private int _currentHealth;
+    private int _attackNum;
     private float _moveSpeed = 1;
 
 
-    [SerializeField] private int HP;
+    [Header("PlayerStats:")]
+    [SerializeField] private int health;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private int attackDamage;
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
-    [SerializeField] private PolygonCollider2D polyCol;
+    [SerializeField] private float fallMulti;
+
+    [Header("Wall Jump Properties:")] 
+    [SerializeField] private float wallJumpTime = 0.2f;
+    [SerializeField] private float wallSlideSpeed = 0.3f;
+    [SerializeField] private float wallDistance = 0.5f;
+    private bool _isWallSliding = false;
+    private RaycastHit2D _wallCheckHit;
+    private float _jumpTime;
+    
+    [Header("RigidBodies and Colliders:")]
+    [SerializeField] private Rigidbody2D rigidBody;
+
+    [Header("Animations Properties:")]
     [SerializeField] private Animator playerAni;
     [SerializeField] private AnimationClip[] attackAnimations;
-    [SerializeField] private Rigidbody2D rigidBody;
+    private static readonly int Walking = Animator.StringToHash("Walking");
+    private static readonly int Running = Animator.StringToHash("Running");
+    private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+    private static readonly int AttackState = Animator.StringToHash("AttackState");
+    private static readonly int Shield = Animator.StringToHash("Shield");
+    private static readonly int Jumping = Animator.StringToHash("Jumping");
+    private static readonly int Hit = Animator.StringToHash("Hit");
+    private static readonly int Dead = Animator.StringToHash("Dead");
 
     private void Awake()
     {
         
         _remainingJumps = jumpTimes;
-        _currentHP = HP;
+        _currentHealth = health;
     }
 
     private void Update()
     {
         Testing();
-        Inputs();
+        if (_canMove)
+        {
+         Inputs();
+        }
     }
 
     private void Inputs()
@@ -63,21 +88,21 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Horizontal"))
         {
-            playerAni.SetBool("Walking", true);
+            playerAni.SetBool(Walking, true);
         }
         if (!Input.GetButton("Horizontal"))
         {
-            playerAni.SetBool("Walking", false);
+            playerAni.SetBool(Walking, false);
         }
         if (Input.GetButton("Run"))
         {
             _moveSpeed = runSpeed;
-            playerAni.SetBool("Running", true);
+            playerAni.SetBool(Running, true);
         }
         if (!Input.GetButton("Run"))
         {
             _moveSpeed = walkSpeed;
-            playerAni.SetBool("Running", false);
+            playerAni.SetBool(Running, false);
         }
         if (Input.GetButtonDown("Jump"))
         {
@@ -97,7 +122,10 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Actions();
+        if (_canMove)
+        {
+         Actions();
+        }
     }
     private void Actions()
     {
@@ -109,10 +137,10 @@ public class PlayerController : MonoBehaviour
 
     private void Attack(int attackNumber)
     {
-        if (_attack == true)
+        if (_attack)
         {
-            playerAni.SetTrigger("Attack");
-            playerAni.SetInteger("AttackState", attackNumber);
+            playerAni.SetTrigger(AttackTrigger);
+            playerAni.SetInteger(AttackState, attackNumber);
             _attack = false;
         }
 
@@ -120,13 +148,11 @@ public class PlayerController : MonoBehaviour
 
     private void ShieldBlock()
     {
-        if (_shieldUp == true)
+        if (_shieldUp)
         {
-          
-         playerAni.SetTrigger("Shield");
+            playerAni.SetTrigger(Shield);
          _shieldUp = false;
          Debug.Log("shield");
-            
         }
 
     }
@@ -143,32 +169,38 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
-        if (_doJump == true )
+        if (_doJump)
         {
             if (_grounded)
             {
                 rigidBody.velocity = new Vector2(0f, 0f);
                 rigidBody.AddForce(new Vector2(0f , jumpForce), ForceMode2D.Impulse);
-                playerAni.SetTrigger("Jumping");
+                playerAni.SetTrigger(Jumping);
             }
             else
             {
-                if (_moreJump == true)
+                if (_moreJump)
                 {
+                    // rigidBody.gravityScale = 1;
                     rigidBody.velocity = new Vector2(0f, 0f);
                     rigidBody.AddForce(new Vector2(0f ,jumpForce), ForceMode2D.Impulse);
-                  playerAni.SetTrigger("Jumping");
+                  playerAni.SetTrigger(Jumping);
                 }
             }
             _doJump = false;
-
         }
-        // while (!_grounded)
-        // {
-        //     rigidBody.gravityScale -= 0.05f;
-        // }
         
+
+        if (rigidBody.velocity.y < 0)
+        {
+            rigidBody.gravityScale += fallMulti;
+        } 
+        else if (rigidBody.velocity.y >= 0)
+        {
+            rigidBody.gravityScale = 1;
+        }
     }
+    
 
     private void Testing()
     {
@@ -180,10 +212,11 @@ public class PlayerController : MonoBehaviour
 
     public void Damage(int dmg)
     {
-        _currentHP -= dmg;
+        playerAni.SetTrigger(Hit);
+        _currentHealth -= dmg;
         Debug.Log($"got:{dmg} dmg");
 
-        if (_currentHP <= 0)
+        if (_currentHealth <= 0)
         {
             Died();
         }
@@ -192,13 +225,10 @@ public class PlayerController : MonoBehaviour
     private void Died()
     {
         Debug.Log("Died");
-        Destroy(this.gameObject);
+        playerAni.SetTrigger(Dead);
+        _canMove = false;
     }
-
-    private void OnCollisionEnter2D(Collision2D col)
-    {
     
-    }
 
     private void OnTriggerEnter2D(Collider2D col)
     {
@@ -216,18 +246,18 @@ public class PlayerController : MonoBehaviour
             }
     }
     
+
     private void OnTriggerExit2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Platform"))
         {
              _grounded = false;
         }
-        if (col.gameObject.CompareTag("StickWall"))
-        {
-            rigidBody.gravityScale = 0;
-            Debug.Log("sticky");
-        }
-        
+        // if (col.gameObject.CompareTag("StickWall"))
+        // {
+        //     rigidBody.gravityScale = 1;
+        //     Debug.Log("notSticky");
+        // }
     }
 
 
