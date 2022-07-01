@@ -161,12 +161,12 @@ public class PlayerController : MonoBehaviour
                 }
             }
             _doJump = false;
+
         }
-        
-        if (_remainingJumps <= 0)
-        {
-            
-        }
+        // while (!_grounded)
+        // {
+        //     rigidBody.gravityScale -= 0.05f;
+        // }
         
     }
 
@@ -195,15 +195,25 @@ public class PlayerController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+    
+    }
+
     private void OnTriggerEnter2D(Collider2D col)
     {
-        
-        if (col.gameObject.CompareTag("Platform"))
-        {
-            _grounded = true;
-            _remainingJumps = jumpTimes;
-            Debug.Log($"refilled jumps to {_remainingJumps}");
-        }
+            if (col.gameObject.CompareTag("StickWall"))
+            {
+                rigidBody.gravityScale = 0;
+                Debug.Log("sticky");
+            }
+            
+            if (col.gameObject.CompareTag("Platform"))
+            {
+                _grounded = true;
+                _remainingJumps = jumpTimes;
+                Debug.Log($"refilled jumps to {_remainingJumps}");
+            }
     }
     
     private void OnTriggerExit2D(Collider2D col)
@@ -212,6 +222,12 @@ public class PlayerController : MonoBehaviour
         {
              _grounded = false;
         }
+        if (col.gameObject.CompareTag("StickWall"))
+        {
+            rigidBody.gravityScale = 0;
+            Debug.Log("sticky");
+        }
+        
     }
 
 
