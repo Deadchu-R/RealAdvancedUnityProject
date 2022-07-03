@@ -364,6 +364,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GroundSakuraTrees
       objectReference: {fileID: 0}
+    - target: {fileID: 4513008713113177837, guid: b6049521781941b43b383054b11ce9d5, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4513008713113177842, guid: b6049521781941b43b383054b11ce9d5, type: 3}
       propertyPath: m_RootOrder
       value: 0

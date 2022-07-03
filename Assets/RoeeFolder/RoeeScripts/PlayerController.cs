@@ -2,13 +2,14 @@
 // using System.Collections;
 // using System.Collections.Generic;
 // using UnityEngine.PlayerLoop;
+// using System;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private bool _grounded = true;
+
+    
     private bool _canMove = true;
-   // private bool _pauseGravity = false;
     private bool _moreJump;
     private bool _doJump ;
     private bool _shieldUp;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour
     private int _currentHealth;
     private int _attackNum;
     private float _moveSpeed = 1;
+    private bool _canWalk = true;
 
 
     [Header("PlayerStats:")]
@@ -28,14 +30,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private float fallMulti;
+    
 
     [Header("Wall Jump Properties:")] 
-    [SerializeField] private float wallJumpTime = 0.2f;
-    [SerializeField] private float wallSlideSpeed = 0.3f;
-    [SerializeField] private float wallDistance = 0.5f;
-    private bool _isWallSliding = false;
-    private RaycastHit2D _wallCheckHit;
-    private float _jumpTime;
+    [SerializeField] private LayerMask groundMask;
+    [SerializeField] private LayerMask stickyWallMask;
+   [SerializeField] private GameObject groundCheckObject;
+   [SerializeField] private GameObject sidesCheckObject;
+    private bool _grounded = true;
+    private bool _wallJumping;
+    private float _currentJumpForce;
+    private bool _isTouchingRight;
+    private bool _isTouchingLeft;
+    private int _touchingLeftOrRight;
+
+
     
     [Header("RigidBodies and Colliders:")]
     [SerializeField] private Rigidbody2D rigidBody;
@@ -54,13 +63,14 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        
+        _currentJumpForce = jumpForce;
         _remainingJumps = jumpTimes;
         _currentHealth = health;
     }
 
     private void Update()
     {
+        LayerCheck();
         Testing();
         if (_canMove)
         {
@@ -115,9 +125,23 @@ public class PlayerController : MonoBehaviour
             {
                 _moreJump = false;
             }
-            _doJump = true;
+            
+            if ((_isTouchingRight || _isTouchingLeft) && !_grounded)
+            {
+                _wallJumping = true;
+                Invoke(nameof(SetWallJumpingToFalse), 0.08f);
+            }
+            else
+            {
+             _doJump = true;
+            }
+            _canWalk = true;
         }
-        
+    }
+
+    private void SetWallJumpingToFalse()
+    {
+        _wallJumping = false;
     }
 
     private void FixedUpdate()
@@ -131,8 +155,23 @@ public class PlayerController : MonoBehaviour
     {
         Attack(_attackNum);
         ShieldBlock();
-        Move();
+        if (_canWalk)
+        {
+         Move();
+        }
         Jump();
+        WallJump();
+
+    }
+
+    private void WallJump()
+    {
+        if (_wallJumping)
+        {
+            rigidBody.velocity = new Vector2(0f, 0f);
+            rigidBody.AddForce(new Vector2(jumpForce / 2 * _touchingLeftOrRight, jumpForce / 2), ForceMode2D.Impulse);
+            playerAni.SetTrigger(Jumping);
+        }
     }
 
     private void Attack(int attackNumber)
@@ -169,39 +208,37 @@ public class PlayerController : MonoBehaviour
     }
     private void Jump()
     {
+  
         if (_doJump)
         {
             if (_grounded)
             {
                 rigidBody.velocity = new Vector2(0f, 0f);
-                rigidBody.AddForce(new Vector2(0f , jumpForce), ForceMode2D.Impulse);
+                rigidBody.AddForce(new Vector2(0f , _currentJumpForce), ForceMode2D.Impulse);
                 playerAni.SetTrigger(Jumping);
             }
             else
             {
                 if (_moreJump)
                 {
-                    // rigidBody.gravityScale = 1;
                     rigidBody.velocity = new Vector2(0f, 0f);
-                    rigidBody.AddForce(new Vector2(0f ,jumpForce), ForceMode2D.Impulse);
+                    rigidBody.AddForce(new Vector2(0f ,_currentJumpForce), ForceMode2D.Impulse);
                   playerAni.SetTrigger(Jumping);
                 }
             }
             _doJump = false;
         }
         
-
-        if (rigidBody.velocity.y < 0)
+        if (rigidBody.velocity.y < 0 && !_wallJumping)
         {
             rigidBody.gravityScale += fallMulti;
         } 
-        else if (rigidBody.velocity.y >= 0)
+        else if (rigidBody.velocity.y >= 0 )
         {
             rigidBody.gravityScale = 1;
         }
     }
     
-
     private void Testing()
     {
         if (Input.GetKeyDown(KeyCode.P))
@@ -210,6 +247,39 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void LayerCheck()
+    {
+        var groundPosition = groundCheckObject.transform.position;
+        var sidesPosition = sidesCheckObject.transform.position;
+        _grounded = Physics2D.OverlapBox(new Vector2(groundPosition.x , groundPosition.y), new Vector2(0.9f, 0.1f), 0f, groundMask); //checks if player touching the ground
+         _isTouchingLeft = Physics2D.OverlapBox(new Vector2(sidesPosition.x -0.9f , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from right
+         _isTouchingRight = Physics2D.OverlapBox(new Vector2(sidesPosition.x  , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from left
+         
+         if (_isTouchingLeft)
+         {
+             _touchingLeftOrRight = 1;
+             _doJump = false;
+         }
+         else if (_isTouchingRight)
+         {
+             _touchingLeftOrRight = -1;
+             _doJump = false;
+         }
+    }
+    private void OnDrawGizmos()
+    {
+        var groundPosition = groundCheckObject.transform.position;
+        var sidesPosition = sidesCheckObject.transform.position;
+        Gizmos.color = Color.green;
+        Gizmos.DrawCube(new Vector2(groundPosition.x , groundPosition.y), new Vector2(0.9f,0.1f));
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawCube(new Vector2(sidesPosition.x -0.9f , sidesPosition.y), new Vector2(0.1f,2.7f));
+        
+        Gizmos.color = Color.blue;
+        Gizmos.DrawCube(new Vector2(sidesPosition.x  , sidesPosition.y), new Vector2(0.1f,2.7f));
+    }
+    
     public void Damage(int dmg)
     {
         playerAni.SetTrigger(Hit);
@@ -232,33 +302,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-            if (col.gameObject.CompareTag("StickWall"))
-            {
-                rigidBody.gravityScale = 0;
-                Debug.Log("sticky");
-            }
-            
-            if (col.gameObject.CompareTag("Platform"))
-            {
-                _grounded = true;
-                _remainingJumps = jumpTimes;
-                Debug.Log($"refilled jumps to {_remainingJumps}");
-            }
-    }
-    
-
-    private void OnTriggerExit2D(Collider2D col)
-    {
         if (col.gameObject.CompareTag("Platform"))
         {
-             _grounded = false;
+            _remainingJumps = jumpTimes;
+            Debug.Log($"refilled jumps to {_remainingJumps}");
         }
-        // if (col.gameObject.CompareTag("StickWall"))
-        // {
-        //     rigidBody.gravityScale = 1;
-        //     Debug.Log("notSticky");
-        // }
     }
-
-
+    
 }

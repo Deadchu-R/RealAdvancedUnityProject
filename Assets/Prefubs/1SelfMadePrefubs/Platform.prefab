@@ -12,6 +12,10 @@ PrefabInstance:
       value: Platform
       objectReference: {fileID: 0}
     - target: {fileID: 190048, guid: f051a34905a2e324d8ec7f7f27a4ea3d, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 190048, guid: f051a34905a2e324d8ec7f7f27a4ea3d, type: 3}
       propertyPath: m_TagString
       value: Platform
       objectReference: {fileID: 0}
@@ -83,32 +87,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 460206, guid: f051a34905a2e324d8ec7f7f27a4ea3d, type: 3}
   m_PrefabInstance: {fileID: 4885251555856751349}
   m_PrefabAsset: {fileID: 0}
---- !u!61 &1019425771397313274
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4885251555856940181}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.43452168}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.03, y: 3.75}
-    newSize: {x: 1, y: 1}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 5.03, y: 2.8809566}
-  m_EdgeRadius: 0
 --- !u!68 &6884483482398070700
 EdgeCollider2D:
   m_ObjectHideFlags: 0
