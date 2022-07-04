@@ -16,20 +16,23 @@ public class enemyBehaviour : MonoBehaviour
     [HideInInspector] public bool inRange; // check if Player is in range;
     private Animator anim;
     private float distance;  // Store the distance betwn enemy & player
-    private bool attackMode;
+     private bool attackMode;
+    private bool _HeavyAttack;
+    [SerializeField] private int attackMade = 3;
     private bool cooling; // Check if Enemy is cooling after attack
     private float intTimer;
     [SerializeField] private float destroyTimer;
-    
+
     [SerializeField] private int HP = 5;
     private int currentHP;
-    public float attackDamage;
+    [SerializeField] private float attackDamage;
 
-    
+
 
     private void Awake()
     {
         IsDead = false;
+        
         currentHP = HP;
         SelectTarget();
 
@@ -48,14 +51,14 @@ public class enemyBehaviour : MonoBehaviour
 
         }
 
-        if(!InsideOfLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack-A1"))
+        if (!InsideOfLimits() && !inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack-A1"))
         {
             SelectTarget();
         }
 
-        
 
-        
+
+
         if (inRange)
         {
             EnemyLogic();
@@ -78,19 +81,21 @@ public class enemyBehaviour : MonoBehaviour
     {
         currentHP -= dmg;
         Debug.Log($"Enemy curreny HP is {currentHP}");
+        anim.SetBool("isHit", true);
 
     }
-    
+
     private void Died()
     {
         IsDead = true;
         //anim.SetBool("IsDead", true);
-        anim.SetBool("Attack", false);
+        anim.SetBool("Attack1", false);
+        anim.SetBool("Attack2", false);
         anim.SetBool("canWalk", false);
         anim.Play("Enemy_Dead");
         Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
-   
+
     void EnemyLogic()
     {
         distance = Vector2.Distance(transform.position, target.position);
@@ -108,7 +113,16 @@ public class enemyBehaviour : MonoBehaviour
         if (cooling)
         {
             Cooldown();
-            anim.SetBool("Attack", false);
+            anim.SetBool("Attack1", false);
+
+            //if (attack2Active==false)
+            //{
+            //    anim.SetBool("Attack1", false);
+
+            //}
+            //else
+            //    anim.SetBool("Attack2", false);
+
         }
 
     }
@@ -117,7 +131,7 @@ public class enemyBehaviour : MonoBehaviour
     void Move()
     {
         anim.SetBool("canWalk", true);
-        if(!anim.GetCurrentAnimatorStateInfo(0).IsName("attack-A1"))
+        if (!anim.GetCurrentAnimatorStateInfo(0).IsName("attack-A1"))
         {
             Vector2 targetPosition = new Vector2(target.position.x, transform.position.y);
 
@@ -129,16 +143,33 @@ public class enemyBehaviour : MonoBehaviour
     {
         timer = intTimer; //Reset Timer when Player enter attack range
         attackMode = true;  //To check if Enemy can still attack or not
-
         anim.SetBool("canWalk", false);
-        anim.SetBool("Attack", true);
+
+        anim.SetTrigger("Attack");
+        if (attackMade>0)
+        {
+            _HeavyAttack=false;
+            anim.SetBool("HeavyAttack", false);
+            attackMade--;
+        }
+        else if (attackMade<=0)
+        {
+            _HeavyAttack = true;
+            anim.SetBool("HeavyAttack", true);
+            attackMade = 3;
+            attackMade--;
+
+        }
+
+
+
 
     }
 
     void Cooldown()
     {
         timer -= Time.deltaTime;
-        if(timer<= 0 && cooling && attackMode)
+        if (timer <= 0 && cooling && attackMode)
         {
             cooling = false;
             timer = intTimer;
@@ -149,13 +180,22 @@ public class enemyBehaviour : MonoBehaviour
     {
         cooling = false;
         attackMode = false;
-        anim.SetBool("Attack", false);
+        anim.SetBool("Attack1", false);
+
+        //if (attack2Active == false)
+        //{
+        //    anim.SetBool("Attack1", false);
+
+        //}
+        //else
+        //    anim.SetBool("Attack2", false);
+
     }
 
 
 
 
-   
+
 
     public void TriggerCooling()
     {
@@ -173,7 +213,7 @@ public class enemyBehaviour : MonoBehaviour
         float distanceToLeft = Vector2.Distance(transform.position, leftLimit.position);
         float distanceToRight = Vector2.Distance(transform.position, rightLimit.position);
 
-        if (distanceToLeft>distanceToRight)
+        if (distanceToLeft > distanceToRight)
         {
             target = leftLimit;
 
