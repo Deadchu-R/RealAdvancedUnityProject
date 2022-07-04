@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
             if ((_isTouchingRight || _isTouchingLeft) && !_grounded)
             {
                 _wallJumping = true;
-                Invoke(nameof(SetWallJumpingToFalse), 0.08f);
+                Invoke(nameof(SetWallJumpingToFalse), 0.16f);
             }
             else
             {
@@ -306,6 +306,12 @@ public class PlayerController : MonoBehaviour
         {
             _remainingJumps = jumpTimes;
             Debug.Log($"refilled jumps to {_remainingJumps}");
+        }
+
+        if (col.gameObject.CompareTag("Enemy 1"))
+        {
+            enemyBehaviour ememyScript = col.gameObject.GetComponent<enemyBehaviour>(); // will get component from Garfield Garfield Script
+            ememyScript.TakeDamage(attackDamage);
         }
     }
     

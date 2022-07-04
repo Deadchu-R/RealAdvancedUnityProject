@@ -1,33 +1,33 @@
 fileFormatVersion: 2
-guid: de9228447b9f4c14eaf68feed224a9d9
+guid: 760f60e4e0f627246b7a71de348f66a9
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8406655169738641462
-    second: smallgraves2_0
+      213: 6909096660457047459
+    second: StonesNoBackGround_0
   - first:
-      213: -2055085599375212418
-    second: smallgraves2_1
+      213: 8375332904302278971
+    second: StonesNoBackGround_1
   - first:
-      213: -2153309719127358871
-    second: smallgraves2_2
+      213: 4034214812827066675
+    second: StonesNoBackGround_2
   - first:
-      213: -3467903063297022888
-    second: smallgraves2_3
+      213: 1010152597760183602
+    second: StonesNoBackGround_3
   - first:
-      213: 8057031949037259530
-    second: smallgraves2_4
+      213: -830488233324981721
+    second: StonesNoBackGround_4
   - first:
-      213: -8915997023515083262
-    second: smallgraves2_5
+      213: -8526623421076250516
+    second: StonesNoBackGround_5
   - first:
-      213: 7638733897237259253
-    second: smallgraves2_6
+      213: 3406058834190798746
+    second: StonesNoBackGround_6
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -49,7 +49,7 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
@@ -82,7 +82,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -124,13 +124,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: smallgraves2_0
+      name: StonesNoBackGround_0
       rect:
         serializedVersion: 2
-        x: 41
-        y: 359
-        width: 93
-        height: 78
+        x: 37
+        y: 380
+        width: 34
+        height: 115
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -138,19 +138,61 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: acfe68ad9af855b80800000000000000
-      internalID: -8406655169738641462
+      spriteID: 3a541658eca02ef50800000000000000
+      internalID: 6909096660457047459
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smallgraves2_1
+      name: StonesNoBackGround_1
       rect:
         serializedVersion: 2
-        x: 279
-        y: 387
-        width: 130
+        x: 80
+        y: 380
+        width: 85
+        height: 110
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b39f39ce6e82b3470800000000000000
+      internalID: 8375332904302278971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StonesNoBackGround_2
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 380
+        width: 84
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3312d228ff86cf730800000000000000
+      internalID: 4034214812827066675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: StonesNoBackGround_3
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 380
+        width: 167
         height: 101
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -159,20 +201,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e704832298eda73e0800000000000000
-      internalID: -2055085599375212418
+      spriteID: 23d0f668f68c40e00800000000000000
+      internalID: 1010152597760183602
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smallgraves2_2
+      name: StonesNoBackGround_4
       rect:
         serializedVersion: 2
-        x: 36
-        y: 227
-        width: 249
-        height: 82
+        x: 185
+        y: 142
+        width: 81
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -180,20 +222,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 962840c1838ed12e0800000000000000
-      internalID: -2153309719127358871
+      spriteID: 722d5861a538974f0800000000000000
+      internalID: -830488233324981721
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smallgraves2_3
+      name: StonesNoBackGround_5
       rect:
         serializedVersion: 2
-        x: 332
-        y: 289
-        width: 152
-        height: 92
+        x: 268
+        y: 143
+        width: 81
+        height: 224
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -201,20 +243,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85421b4a9888fdfc0800000000000000
-      internalID: -3467903063297022888
+      spriteID: c60693dac295ba980800000000000000
+      internalID: -8526623421076250516
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smallgraves2_4
+      name: StonesNoBackGround_6
       rect:
         serializedVersion: 2
-        x: 283
-        y: 182
-        width: 161
-        height: 64
+        x: 351
+        y: 145
+        width: 81
+        height: 223
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -222,50 +264,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a0bc652aed350df60800000000000000
-      internalID: 8057031949037259530
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smallgraves2_5
-      rect:
-        serializedVersion: 2
-        x: 5
-        y: 23
-        width: 256
-        height: 114
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 20e71f232f3044480800000000000000
-      internalID: -8915997023515083262
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smallgraves2_6
-      rect:
-        serializedVersion: 2
-        x: 254
-        y: 94
-        width: 247
-        height: 71
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 5f3ef8ef10c320a60800000000000000
-      internalID: 7638733897237259253
+      spriteID: a9f0600b670c44f20800000000000000
+      internalID: 3406058834190798746
       vertices: []
       indices: 
       edges: []

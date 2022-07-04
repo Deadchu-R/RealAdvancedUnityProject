@@ -1,21 +1,18 @@
 fileFormatVersion: 2
-guid: 45ae9453d24e92e41b1be40b5577a6f2
+guid: 7d233a1f3c02c0042b81042a31b85f11
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1723737687335506019
-    second: smallgraves1_0
+      213: 911522654707021983
+    second: LongTreeNoBackGround_0
   - first:
-      213: 2970023280916340656
-    second: smallgraves1_1
-  - first:
-      213: -7818149175740425514
-    second: smallgraves1_2
+      213: 5021385769355286901
+    second: LongTreeNoBackGround_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -37,7 +34,7 @@ TextureImporter:
   generateCubemap: 6
   cubemapConvolution: 0
   seamlessCubemap: 0
-  textureFormat: -1
+  textureFormat: 1
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
@@ -70,7 +67,7 @@ TextureImporter:
   compressionQualitySet: 0
   textureFormatSet: 0
   ignorePngGamma: 0
-  applyGammaDecoding: 1
+  applyGammaDecoding: 0
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -112,34 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: smallgraves1_0
+      name: LongTreeNoBackGround_0
       rect:
         serializedVersion: 2
-        x: 19
-        y: 55
-        width: 124
-        height: 139
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d9fe964c4bd0418e0800000000000000
-      internalID: -1723737687335506019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: smallgraves1_1
-      rect:
-        serializedVersion: 2
-        x: 167
+        x: 5
         y: 15
-        width: 137
-        height: 131
+        width: 148
+        height: 429
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,20 +123,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0bf98a92074a73920800000000000000
-      internalID: 2970023280916340656
+      spriteID: f987886660166ac00800000000000000
+      internalID: 911522654707021983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: smallgraves1_2
+      name: LongTreeNoBackGround_1
       rect:
         serializedVersion: 2
-        x: 344
-        y: 126
-        width: 146
-        height: 95
+        x: 207
+        y: 8
+        width: 137
+        height: 437
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -168,8 +144,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6da9afa3fba508390800000000000000
-      internalID: -7818149175740425514
+      spriteID: 5799f96b0cb8fa540800000000000000
+      internalID: 5021385769355286901
       vertices: []
       indices: 
       edges: []

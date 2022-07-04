@@ -5,7 +5,7 @@ using UnityEngine;
 public class enemyBehaviour : MonoBehaviour
 {
     private bool IsDead;
-    [SerializeField] private float attackDistance;  //minimum distance for attack
+    public float attackDistance;  //minimum distance for attack
     [SerializeField] private float moveSpeed;
     [SerializeField] private float timer; // timer for cooldown attacks
     [SerializeField] private Transform leftLimit;
