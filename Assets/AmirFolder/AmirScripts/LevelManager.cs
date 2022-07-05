@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour
     int i;
     private void Awake()
     {
+        LoadPrefs();
         i = SceneManager.GetActiveScene().buildIndex;
         //string activeScene = SceneManager.GetActiveScene().name;
     }
@@ -40,6 +41,7 @@ public class LevelManager : MonoBehaviour
     {
         Application.Quit(); // will quit game 
         Debug.Log("Game Closed"); //debug
+        PlayerPrefs.Save();
     }
 
     public void StageWon()
@@ -54,6 +56,16 @@ public class LevelManager : MonoBehaviour
     }
 
     public void DeleteSave()
+    {
+
+    }
+
+    public void LoadPrefs()
+    {
+
+    }
+
+    public void SavePrefs()
     {
 
     }

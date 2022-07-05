@@ -2,10 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 using DG.Tweening;
+using System.IO;
+using UnityEngine.UI;
 
 public class PauseMenu : MonoBehaviour
 {
+    private string _fileLocation;
+    private string _saveMe;
     public static bool GameIsPaused = false; // bool the check if game is pause 
     public GameObject pauseMenuUI; // setting gameObject "pauseMenuUI" in the script
     public GameObject SaveLoadSubMenu;
@@ -19,6 +24,13 @@ public class PauseMenu : MonoBehaviour
     public GameObject masterSlider;
     public GameObject musicSlider;
     public GameObject SFXSlider;
+
+    [SerializeField] private Slider masterVolumeSlider;
+    [SerializeField] private Slider musicVolumeSlider;
+    [SerializeField] private Slider SFXVolumeSlider;
+    private string masterVolume;
+    private string musicVolume;
+    private string SFXVolume;
 
     private bool optionsOn = false;
     private bool masterSlideOn = false;
@@ -93,6 +105,35 @@ public class PauseMenu : MonoBehaviour
     private void ShutDown()
     {
         optionSub.SetActive(false);
+    }
+
+    public void SaveVolumes()
+    {
+        masterVolume = masterVolumeSlider.value.ToString();
+        musicVolume = musicVolumeSlider.value.ToString();
+        SFXVolume = SFXVolumeSlider.value.ToString();
+
+        Debug.Log("MasterVolume: " + masterVolume);
+        Debug.Log("MusicVolume: " + musicVolume);
+        Debug.Log("SFXVolume: " + SFXVolume);
+
+        _saveMe = $"{masterVolume}\n {musicVolume}\n {SFXVolume}\n";
+        File.Delete(_fileLocation);
+        File.AppendAllText(_fileLocation, _saveMe);
+        Debug.Log("Saved: \n" + _saveMe);
+    }
+
+    public void OptionsOnOff()
+    {
+        if (optionsOn == false)
+        {
+            optionsOn = true;
+        }
+        else if (optionsOn == true)
+        {
+            SaveVolumes();
+            optionsOn = false;
+        }
     }
 
     public void MasterSlide()
