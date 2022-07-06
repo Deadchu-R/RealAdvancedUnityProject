@@ -69,4 +69,17 @@ public class LevelManager : MonoBehaviour
     {
 
     }
+
+    public delegate void ClickAction();     //delegate - function containers
+    public static event ClickAction OnClicked;  //will not work and may cause memory leak if it has no subscribers
+
+    private void OnGUI()   //adds a button on the UI screen
+    {
+        if (GUI.Button(new Rect(Screen.width / 2 - 50, 5, 100, 30), "Click"))  //position & text of the button
+        {
+            if (OnClicked != null)    //checks if it has subscribers attached to the event.
+                OnClicked();        // will activate all subscribers that are attached to it
+        }
+    }
+
 }
