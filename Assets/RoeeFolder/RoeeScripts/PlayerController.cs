@@ -1,15 +1,13 @@
-// using System;
-// using System.Collections;
-// using System.Collections.Generic;
-// using UnityEngine.PlayerLoop;
-// using System;
+
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
 
-    
+
     private bool _canMove = true;
+    private bool _canAttack = true;
     private bool _moreJump;
     private bool _doJump ;
     private bool _shieldUp;
@@ -20,10 +18,11 @@ public class PlayerController : MonoBehaviour
     private int _attackNum;
     private float _moveSpeed = 1;
     private bool _canWalk = true;
-
+    [SerializeField] private Text healthText;
+    [SerializeField] private GameObject checkPointCanvas;
 
     [Header("PlayerStats:")]
-    [SerializeField] private int health;
+     public int health;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private int attackDamage;
@@ -72,15 +71,19 @@ public class PlayerController : MonoBehaviour
     {
         LayerCheck();
         Testing();
+        InputBool();
         if (_canMove)
         {
          Inputs();
         }
+
+        healthText.text ="HP:" + _currentHealth;
     }
 
+    
     private void Inputs()
     {
-        if (Input.GetButtonDown("Attack"))
+        if (Input.GetButtonDown("Attack") && _canAttack)
         {
             if (_attackNum >= attackAnimations.Length)
             {
@@ -153,7 +156,12 @@ public class PlayerController : MonoBehaviour
     }
     private void Actions()
     {
-        Attack(_attackNum);
+        if (_canAttack)
+        {
+         Attack(_attackNum);
+        }
+        
+
         ShieldBlock();
         if (_canWalk)
         {
@@ -298,8 +306,21 @@ public class PlayerController : MonoBehaviour
         playerAni.SetTrigger(Dead);
         _canMove = false;
     }
-    
 
+    public void InputBool()
+    {
+        if (checkPointCanvas.activeSelf)
+        {
+            _canAttack = false;
+            _canMove = false;
+        }
+        else
+        {
+         _canMove = true;
+         _canAttack = true;
+        }
+    }
+    
     private void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.CompareTag("Platform"))
@@ -308,11 +329,26 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"refilled jumps to {_remainingJumps}");
         }
 
+
+
         if (col.gameObject.CompareTag("Enemy 1"))
         {
-            enemyBehaviour ememyScript = col.gameObject.GetComponent<enemyBehaviour>(); // will get component from Garfield Garfield Script
-            ememyScript.TakeDamage(attackDamage);
+            enemyBehaviour enemyScript = col.gameObject.GetComponent<enemyBehaviour>(); // will get component from Garfield Garfield Script
+            enemyScript.TakeDamage(attackDamage);
         }
     }
-    
+
+    public void SavePlayerAtCheckPoint()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+
+    public void LoadPlayerSave()
+    {
+        PlayerData playerData = SaveSystem.LoadPlayer();
+         
+        _currentHealth = playerData.health;
+        transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+    }
+
 }

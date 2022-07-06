@@ -8,6 +8,7 @@ TagManager:
   - StickWall
   - Enemy 1
   - HitBox1
+  - CheckPoint
   layers:
   - Default
   - TransparentFX
