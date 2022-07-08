@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class enemyBehaviour : MonoBehaviour
 {
-    private bool IsDead;
+    private bool IsDead = false;
     public float attackDistance;  //minimum distance for attack
     [SerializeField] private float moveSpeed;
     [SerializeField] private float timer; // timer for cooldown attacks
@@ -16,8 +16,10 @@ public class enemyBehaviour : MonoBehaviour
     [HideInInspector] public bool inRange; // check if Player is in range;
     private Animator anim;
     private float distance;  // Store the distance betwn enemy & player
-     private bool attackMode;
-    private bool _HeavyAttack;
+    private bool attackMode;
+    private bool canAttack = false;
+    //private bool _HeavyAttack = false;
+    private int attackNum = 1;
     [SerializeField] private int attackMade = 3;
     private bool cooling; // Check if Enemy is cooling after attack
     private float intTimer;
@@ -31,8 +33,6 @@ public class enemyBehaviour : MonoBehaviour
 
     private void Awake()
     {
-        IsDead = false;
-        
         currentHP = HP;
         SelectTarget();
 
@@ -89,9 +89,10 @@ public class enemyBehaviour : MonoBehaviour
     {
         IsDead = true;
         //anim.SetBool("IsDead", true);
-        anim.SetBool("Attack1", false);
-        anim.SetBool("Attack2", false);
+        //anim.SetBool("Attack1", false);
+        //anim.SetBool("Attack2", false);
         anim.SetBool("canWalk", false);
+        anim.SetBool("canAttack", false);
         anim.Play("Enemy_Dead");
         Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
@@ -107,13 +108,15 @@ public class enemyBehaviour : MonoBehaviour
         }
         else if (attackDistance >= distance && cooling == false)
         {
+            canAttack = true;
             Attack();
+            //Invoke(nameof(Attack),1f);
         }
 
         if (cooling)
         {
             Cooldown();
-            anim.SetBool("Attack1", false);
+            anim.SetBool("CanAttack", false);
 
             //if (attack2Active==false)
             //{
@@ -141,29 +144,12 @@ public class enemyBehaviour : MonoBehaviour
 
     void Attack()
     {
+        Debug.Log("Enterd attack zone");
         timer = intTimer; //Reset Timer when Player enter attack range
         attackMode = true;  //To check if Enemy can still attack or not
         anim.SetBool("canWalk", false);
-
-        anim.SetTrigger("Attack");
-        if (attackMade>0)
-        {
-            _HeavyAttack=false;
-            anim.SetBool("HeavyAttack", false);
-            attackMade--;
-        }
-        else if (attackMade<=0)
-        {
-            _HeavyAttack = true;
-            anim.SetBool("HeavyAttack", true);
-            attackMade = 3;
-            attackMade--;
-
-        }
-
-
-
-
+        anim.SetBool("canAttack", true);
+        Debug.Log("Exit attack zone");
     }
 
     void Cooldown()
@@ -180,7 +166,7 @@ public class enemyBehaviour : MonoBehaviour
     {
         cooling = false;
         attackMode = false;
-        anim.SetBool("Attack1", false);
+        anim.SetBool("canAttack", false);
 
         //if (attack2Active == false)
         //{
