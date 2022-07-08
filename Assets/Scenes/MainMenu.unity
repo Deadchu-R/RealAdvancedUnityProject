@@ -2740,7 +2740,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0f73ea0c3cdc0684aad75e18350f245c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f60831467ca5534689c972bd2983e86, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4050,7 +4050,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0f73ea0c3cdc0684aad75e18350f245c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2f60831467ca5534689c972bd2983e86, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5344,9 +5344,109 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 493304833}
     m_Modifications:
+    - target: {fileID: 261003545, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261003545, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 261003545, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 335029314, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 335029314, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 335029314, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1265827066, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 22e3af2641095a64382eb2f952a7efc2, type: 3}
+    - target: {fileID: 995206884592992618, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884592992618, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884592992618, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884720290852, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884720290852, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884720290852, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884957093550, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 1db03f2a64b3a9442917cb83bb37d720, type: 3}
+    - target: {fileID: 995206884957093551, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 197.0096
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884957093551, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 158.0962
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884957093551, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -0.000020981
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206884957093551, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -57
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885345777101, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885345777101, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885345777101, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885433086904, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 92
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885433086907, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ea56163945465404394aab5b88478e33, type: 3}
+    - target: {fileID: 995206885499209036, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 4b6a13b49b81a5e45b852f8dbeeb9d3e, type: 3}
     - target: {fileID: 995206885550191016, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
       propertyPath: m_Name
       value: ControllerControls
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885550191016, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 995206885550191019, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
       propertyPath: m_Pivot.x
@@ -5432,6 +5532,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 995206885675631949, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885675631949, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206885675631949, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206886072662102, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e0ade7a38027d5847aa7d7d393821f1f, type: 3}
+    - target: {fileID: 995206886539832668, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206886539832668, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206886539832668, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 995206886585718288, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 527c4ef276b772548bf6261185155860, type: 3}
+    - target: {fileID: 995206886585718289, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -92
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80f73a2063f4a0d45bcc492163b14e1a, type: 3}
 --- !u!1001 &4951048071334796253
@@ -5444,6 +5580,10 @@ PrefabInstance:
     - target: {fileID: 4951048070629443556, guid: 5db5f44635209e740903eec03238a0c5, type: 3}
       propertyPath: m_Name
       value: KeyboardControls
+      objectReference: {fileID: 0}
+    - target: {fileID: 4951048070629443556, guid: 5db5f44635209e740903eec03238a0c5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4951048070629443559, guid: 5db5f44635209e740903eec03238a0c5, type: 3}
       propertyPath: m_Pivot.x
