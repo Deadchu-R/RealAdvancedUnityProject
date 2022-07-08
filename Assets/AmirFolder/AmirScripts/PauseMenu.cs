@@ -39,6 +39,13 @@ public class PauseMenu : MonoBehaviour
 
     private float animDuration = 1;
 
+
+    public int easterEgg = 0;
+    [SerializeField] private GameObject easterEgg1;
+    [SerializeField] private GameObject easterEgg2;
+    [SerializeField] private GameObject easterEgg3;
+    [SerializeField] private GameObject easterEgg4;
+
     void Update()
     {
         EscapeButton(); // method to use Escape Button in order to pause or unPause the game
@@ -70,6 +77,12 @@ public class PauseMenu : MonoBehaviour
         ShutDown();
         optionsOn = false;
         Debug.Log("Game is Resuming"); // debuging
+
+        easterEgg = 0;
+        easterEgg1.SetActive(false);
+        easterEgg2.SetActive(false);
+        easterEgg3.SetActive(false);
+        easterEgg4.SetActive(false);
     }
 
 
@@ -201,6 +214,33 @@ public class PauseMenu : MonoBehaviour
     {
         keyboardControls.SetActive(false);
         controllerControls.SetActive(true);
+    }
+
+    public void EasterEgg()
+    {
+        if (pauseMenuUI == true)
+        {
+            if (easterEgg == 0)
+            {
+                easterEgg++;
+                easterEgg1.SetActive(true);
+            }
+            else if (easterEgg == 1)
+            {
+                easterEgg++;
+                easterEgg2.SetActive(true);
+            }
+            else if (easterEgg == 2)
+            {
+                easterEgg++;
+                easterEgg3.SetActive(true);
+            }
+            else if (easterEgg == 3)
+            {
+                easterEgg++;
+                easterEgg4.SetActive(true);
+            }
+        }
     }
 
 }
