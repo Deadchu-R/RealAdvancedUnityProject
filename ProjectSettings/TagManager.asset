@@ -9,6 +9,7 @@ TagManager:
   - Enemy 1
   - HitBox1
   - CheckPoint
+  - EnemyLimits
   layers:
   - Default
   - TransparentFX
