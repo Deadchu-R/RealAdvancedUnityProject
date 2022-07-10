@@ -9,7 +9,10 @@ TagManager:
   - Enemy 1
   - HitBox1
   - CheckPoint
-  - EnemyLimits
+  - Sliders
+  - FirstP
+  - SecondP
+  - Fatform
   layers:
   - Default
   - TransparentFX
