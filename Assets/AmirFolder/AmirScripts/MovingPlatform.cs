@@ -4,135 +4,84 @@ using UnityEngine;
 
 public class MovingPlatform : MonoBehaviour
 {
-    //1 object that is platform(the player's floor) , 1 object that is a tree , the tree's position to move with the platform. (tree's transform position y)
-    //disable player's movement abilities when the platform is moving
-    
-    [SerializeField] private GameObject platForm;
-    [SerializeField] private GameObject platFormTree;
-
-    [SerializeField] private float platformTimer = 2;
-    [SerializeField] private GameObject FirstP;
-    [SerializeField] private GameObject Fatform;
-    [SerializeField] private GameObject SecondP;
-
-    [SerializeField] private Rigidbody2D playerBody;
-    [SerializeField] private GameObject player;
-
-    [SerializeField] float offsetLeft = 0, offsetRight = 0, speed = 1;
-    private bool ReachedRight = false, ReachedLeft = false;
-    [SerializeField] private bool playerOnPlat = false;
-    Vector3 startposition = Vector3.zero;
+    [SerializeField] private Vector3 velocity;
+    private bool moving = false;
+    private bool forward = true;
+    [SerializeField] private GameObject firstPoint;
+    [SerializeField] private GameObject secondPoint;
+    [SerializeField] private GameObject switchPoint;
+    [SerializeField] private GameObject returnPoint;
+    [SerializeField] private GameObject Platform;
+    [SerializeField] private GameObject leftPlatformCollider;
+    [SerializeField] private GameObject rightPlatformCollider;
 
 
 
-    // Start is called before the first frame update
-    void Start()
+
+    private void FixedUpdate()
     {
-        startposition = transform.position;
+        if (moving && forward)
+        {
+            transform.position += (velocity * Time.deltaTime);
+        }
+        else if (moving && !forward)
+        {
+            transform.position -= (velocity * Time.deltaTime);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (playerOnPlat)
-            PlatformForward();
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            leftPlatformCollider.gameObject.SetActive(true);
+            rightPlatformCollider.gameObject.SetActive(true);
+            collision.collider.transform.SetParent(transform);
+            moving = true;
+        }
     }
 
-    void Move(float offset)  //platform's movement
+    private void OnCollisionExit2D(Collision2D collision)
     {
-        transform.position = Vector3.MoveTowards
-            (
-            transform.position,
-            new Vector3(startposition.x + offset,
-            transform.position.y,
-            transform.position.z),
-            speed * Time.deltaTime
-            );
-    }
-
-    private void OnCollisionEnter2D(Collision2D coll)
-    {
-
-        if (coll.gameObject.CompareTag("SecondP"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            Fatform.transform.SetParent(SecondP.transform, false);
-            //disable player movement
-            //platFormTree.transform.position.y;
-            Debug.Log("new parent");
+            leftPlatformCollider.gameObject.SetActive(false);
+            rightPlatformCollider.gameObject.SetActive(false);
+            moving = false;
+            collision.collider.transform.SetParent(null);
         }
-
-        else if (coll.gameObject.CompareTag("FirstP"))
-        {
-            Fatform.transform.SetParent(FirstP.transform, false);
-            //disable player movement
-            //platFormTree.transform.position.y;
-            Debug.Log("new parent");
-            
-        }
-
-        else if (coll.gameObject.CompareTag("Player"))
-        {
-            playerOnPlat = true;
-            
-            Debug.Log("on platform");
-        }
-
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject == player)
+        if (collision.gameObject.CompareTag("SwitchPoint"))
         {
-            player.transform.parent = transform;
+            switchPoint.transform.SetParent(transform);
+            Platform.transform.SetParent(null);
         }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject == player)
+        else if (collision.gameObject.CompareTag("ReturnPoint"))
         {
-            player.transform.parent = null;
+            switchPoint.transform.SetParent(null);
+            Platform.transform.SetParent(transform);
         }
-    }
 
-    private void PlatformForward()
-    {
-        if (!ReachedRight)
+        else if (collision.gameObject.CompareTag("SecondP"))
         {
-
-            //player movement disabled during platform movement
-            if (transform.position.x < startposition.x + offsetRight)
-            {                   
-                Move(offsetRight);
-                player.transform.SetParent(FirstP.transform, false);
-            }
-            else if (transform.position.x >= startposition.x + offsetRight)
-            {
-                ReachedRight = true;
-                player.transform.DetachChildren();
-                ReachedLeft = false;
-            }
-            Invoke(nameof(PlatformBackward), platformTimer);
+            moving = false;
+            forward = false;
 
         }
+        else if (collision.gameObject.CompareTag("FirstP"))
+        {
+            moving = false;
+            forward = true;
+        }
+
+
+
     }
 
-    private void PlatformBackward()
-    {
-        
-        if (!ReachedLeft)
-        {
-            if (transform.position.x > startposition.x + offsetLeft)
-            {
-                Move(offsetLeft);
-            }
-            else if (transform.position.x <= startposition.x + offsetLeft)
-            {
-                ReachedRight = false;
-                ReachedLeft = true;
-            }
-        }
-        playerOnPlat = false;
-    }
+
+
 
 }

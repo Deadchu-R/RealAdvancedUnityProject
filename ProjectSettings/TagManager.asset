@@ -9,11 +9,12 @@ TagManager:
   - Enemy 1
   - HitBox1
   - CheckPoint
-  - Sliders
   - FirstP
   - SecondP
-  - Fatform
   - FallLimiter
+  - EnemyLimits
+  - SwitchPoint
+  - ReturnPoint
   layers:
   - Default
   - TransparentFX
