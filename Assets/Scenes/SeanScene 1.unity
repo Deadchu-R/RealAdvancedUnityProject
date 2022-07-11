@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984f1104ad391ed458acf85f32b2efa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skelaton: {fileID: 90930073}
+  skeleton: {fileID: 90930073}
   surviveTimer: 30
   amountOfEnemies: 0
 --- !u!212 &215212315
@@ -711,7 +711,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1407572400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.93, y: -0.94052577, z: 0}
+  m_LocalPosition: {x: -19.62, y: 11.73, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
