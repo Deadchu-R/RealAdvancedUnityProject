@@ -6,29 +6,33 @@ public class PlayerController : MonoBehaviour
 {
 
 
+    [Header("Actions Booleans and numbers")]
+    private float _moveHorizontal;
     private bool _canMove = true;
     private bool _canAttack = true;
     private bool _moreJump;
     private bool _doJump ;
     private bool _shieldUp;
     private bool _attack;
-    private float _moveHorizontal;
-    private int _remainingJumps;
-    private int _currentHealth;
     private int _attackNum;
     private float _moveSpeed = 1;
     private bool _canWalk = true;
-    [SerializeField] private Text healthText;
+    
+    [Header("UI Elements")]
     [SerializeField] private GameObject checkPointCanvas;
+    [SerializeField]  private Image healthBar;
+    [SerializeField] private GameObject gameOver;
 
     [Header("PlayerStats:")]
-     public int health;
+    public float maxHealth;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
     [SerializeField] private int attackDamage;
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private float fallMulti;
+    private int _remainingJumps;
+    private float _currentHealth;
     
 
     [Header("Wall Jump Properties:")] 
@@ -59,28 +63,37 @@ public class PlayerController : MonoBehaviour
     private static readonly int Jumping = Animator.StringToHash("Jumping");
     private static readonly int Hit = Animator.StringToHash("Hit");
     private static readonly int Dead = Animator.StringToHash("Dead");
+    private static readonly int Retry = Animator.StringToHash("Retry");
 
     private void Awake()
     {
         _currentJumpForce = jumpForce;
         _remainingJumps = jumpTimes;
-        _currentHealth = health;
+        _currentHealth = maxHealth;
     }
 
     private void Update()
     {
         LayerCheck();
         Testing();
+        HealthBar();
         InputBool();
         if (_canMove)
         {
          Inputs();
         }
 
-        healthText.text ="HP:" + _currentHealth;
+        
+
     }
 
-    
+
+
+    private void HealthBar()
+    {
+        healthBar.fillAmount = _currentHealth / maxHealth;
+    }
+
     private void Inputs()
     {
         if (Input.GetButtonDown("Attack") && _canAttack)
@@ -287,7 +300,9 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.blue;
         Gizmos.DrawCube(new Vector2(sidesPosition.x  , sidesPosition.y), new Vector2(0.1f,2.7f));
     }
-    
+
+
+
     public void Damage(int dmg)
     {
         playerAni.SetTrigger(Hit);
@@ -302,14 +317,23 @@ public class PlayerController : MonoBehaviour
 
     private void Died()
     {
+        
         Debug.Log("Died");
-        playerAni.SetTrigger(Dead);
-        _canMove = false;
+            playerAni.SetTrigger(Dead);
+            playerAni.SetBool(Retry, false);
+            _canMove = false;
+            Invoke(nameof(GameOver), 2f);
+    }
+
+    private void GameOver()
+    {
+        gameOver.SetActive(true);
+        Time.timeScale = 0;
     }
 
     public void InputBool()
     {
-        if (checkPointCanvas.activeSelf)
+        if (checkPointCanvas.activeSelf || gameOver.activeSelf)
         {
             _canAttack = false;
             _canMove = false;
@@ -329,7 +353,11 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"refilled jumps to {_remainingJumps}");
         }
 
-
+        if (col.gameObject.CompareTag("FallLimiter"))
+        {
+            rigidBody.gravityScale = 1;
+            GameOver();
+        }
 
         if (col.gameObject.CompareTag("Enemy 1"))
         {
@@ -348,7 +376,11 @@ public class PlayerController : MonoBehaviour
         PlayerData playerData = SaveSystem.LoadPlayer();
          
         _currentHealth = playerData.health;
-        transform.position = new Vector3(playerData.position[0], playerData.position[1], playerData.position[2]);
+        transform.position = new Vector3(playerData.position[0], playerData.position[1] +1, playerData.position[2]);
+        Time.timeScale = 1;
+        gameOver.SetActive(false);
+        _canMove = true;
+        playerAni.SetBool(Retry, true);
     }
 
 }

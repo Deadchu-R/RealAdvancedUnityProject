@@ -8,7 +8,7 @@ public class LevelManager : MonoBehaviour
     int i;
     private void Awake()
     {
-        LoadPrefs();
+
         i = SceneManager.GetActiveScene().buildIndex;
         //string activeScene = SceneManager.GetActiveScene().name;
     }
@@ -20,10 +20,10 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(i + 1); // will load Next Scene
         Debug.Log("Start game");
     }
-    //method for retry button after losin
+    //method for retry button after losing
     public void Retry()
     {
-        if (SceneManager.GetActiveScene().name == "GameOver1") // if lostscene is 1
+        if (SceneManager.GetActiveScene().name == "GameOver1") // if loseScene is 1
         {
             SceneManager.LoadScene(i - 1); // will load level1
             Debug.Log("Starting stage1");
@@ -49,27 +49,11 @@ public class LevelManager : MonoBehaviour
         SceneManager.LoadScene(i + 1);
         Debug.Log("Next stage!");
     }
+    
 
-    public void LoadSave()
-    {
-
-    }
-
-    public void DeleteSave()
-    {
-
-    }
-
-    public void LoadPrefs()
-    {
-
-    }
-
-    public void SavePrefs()
-    {
-
-    }
-
+    
+    
+    // Unity Event V
     public delegate void ClickAction();     //delegate - function containers
     public static event ClickAction OnClicked;  //will not work and may cause memory leak if it has no subscribers
 

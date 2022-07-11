@@ -13,6 +13,7 @@ TagManager:
   - FirstP
   - SecondP
   - Fatform
+  - FallLimiter
   layers:
   - Default
   - TransparentFX

@@ -12,11 +12,9 @@ public class PauseMenu : MonoBehaviour
     private string _fileLocation;
     private string _saveMe;
     public static bool GameIsPaused = false; // bool the check if game is pause 
-    public GameObject pauseMenuUI; // setting gameObject "pauseMenuUI" in the script
+    public GameObject pauseMenu; // setting gameObject "pauseMenuUI" in the script
     public GameObject SaveLoadSubMenu;
-    public Transform optionSubMenu;
     public GameObject optionSub;
-    public GameObject subMenu;
     public GameObject controlMenu;
     public GameObject keyboardControls;
     public GameObject controllerControls;
@@ -70,10 +68,10 @@ public class PauseMenu : MonoBehaviour
     // a method to Resume Game
     public void Resume()
     {
-        pauseMenuUI.SetActive(false); // setting the PauseMenu to not Active
+        pauseMenu.SetActive(false); // setting the PauseMenu to not Active
         Time.timeScale = 1; // resuming Time
         GameIsPaused = false; // setting gameIsPaused bool to false 
-        optionSubMenu.DOMoveX(970, animDuration).SetUpdate(true);
+        optionSub.transform.DOMoveX(970, animDuration).SetUpdate(true);
         ShutDown();
         optionsOn = false;
         Debug.Log("Game is Resuming"); // debuging
@@ -89,7 +87,7 @@ public class PauseMenu : MonoBehaviour
     // a method to pause game
     public void Pause()
     {
-        pauseMenuUI.SetActive(true); // setting pauseMenu to active
+        pauseMenu.SetActive(true); // setting pauseMenu to active
         Time.timeScale = 0; // pausing Time
         GameIsPaused = true; // setting bool GameIsPause to true
         Debug.Log("Game is Paused"); // debugging
@@ -101,7 +99,7 @@ public class PauseMenu : MonoBehaviour
         if (optionsOn == false)
         {
             optionSub.SetActive(true);
-            optionSubMenu.DOMoveX(1270, animDuration).SetUpdate(true);
+            optionSub.transform.DOMoveX(1270, animDuration).SetUpdate(true);
             optionsOn = true;
         }
         else if (optionsOn == true)
@@ -110,7 +108,7 @@ public class PauseMenu : MonoBehaviour
             musicSlider.SetActive(false);
             SFXSlider.SetActive(false);
             Sequence seq2 = DOTween.Sequence();
-            seq2.Append(optionSubMenu.DOMoveX(970, animDuration)).SetUpdate(true);
+            seq2.Append(optionSub.transform.DOMoveX(970, animDuration)).SetUpdate(true);
             seq2.OnComplete(ShutDown);
             optionsOn = false;
         }
@@ -194,14 +192,14 @@ public class PauseMenu : MonoBehaviour
 
     public void EnterControlMenu()
     {
-        pauseMenuUI.SetActive(false);
+        pauseMenu.SetActive(false);
         controlMenu.SetActive(true);
     }
 
     public void ExitControlMenu()
     {
         controlMenu.SetActive(false);
-        pauseMenuUI.SetActive(true);
+        pauseMenu.SetActive(true);
     }
 
     public void KeyboardControls()
@@ -218,7 +216,7 @@ public class PauseMenu : MonoBehaviour
 
     public void EasterEgg()
     {
-        if (pauseMenuUI == true)
+        if (pauseMenu == true)
         {
             if (easterEgg == 0)
             {

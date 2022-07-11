@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class AmirUI : MonoBehaviour
 {
     private Image healthBar;
-    public float currentHP;
-    private float maxHP = 20f;
+    // public float currentHP;
+    // private float maxHP = 20f;
     [SerializeField] private GameObject gameOver;
 
 
@@ -31,27 +31,32 @@ public class AmirUI : MonoBehaviour
     void Update()
     {
         GameOver();
-        //currentHP = Player.Health;
-        healthBar.fillAmount = currentHP / maxHP;
+
+        // healthBar.fillAmount = currentHP / maxHP;
+    }
+
+    public void HealthBar(float currentHealth, float maxHealth)
+    {
+        healthBar.fillAmount = currentHealth / maxHealth;
     }
 
     public void LostHP()
     {
-        currentHP--;
+  
     }
 
     public void RecoverHP()
     {
-        currentHP++;
+
     }
 
     public void GameOver()
     {
-        if (currentHP <= 0)
-        {
-            gameOver.SetActive(true);
-            Time.timeScale = 0;
-        }
+        // if (currentHP <= 0)
+        // {
+        //     gameOver.SetActive(true);
+        //     Time.timeScale = 0;
+        // }
     }
 
     public void Retry()
