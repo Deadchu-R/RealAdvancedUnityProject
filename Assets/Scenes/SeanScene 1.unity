@@ -185,9 +185,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984f1104ad391ed458acf85f32b2efa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeleton: {fileID: 90930073}
+  enemy: {fileID: 90930073}
   surviveTimer: 30
   amountOfEnemies: 0
+  enemyCount: []
+  maxEnemiesInArray: 50
+  enemiesAtStage1: 1
+  stages: 2
 --- !u!212 &215212315
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -735,7 +739,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1943507388646679140, guid: 94d9e2ae9cd9a79478796b7c6f7275e5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.86000013
+      value: -9.64
       objectReference: {fileID: 0}
     - target: {fileID: 1943507388646679140, guid: 94d9e2ae9cd9a79478796b7c6f7275e5, type: 3}
       propertyPath: m_LocalPosition.y
@@ -779,7 +783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3300331308188441328, guid: 94d9e2ae9cd9a79478796b7c6f7275e5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3300331308188441328, guid: 94d9e2ae9cd9a79478796b7c6f7275e5, type: 3}
       propertyPath: m_TagString
@@ -845,6 +849,10 @@ PrefabInstance:
     - target: {fileID: 8444807395753325325, guid: 6b7034ae02b4769429824cfba9041098, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8444807395753325326, guid: 6b7034ae02b4769429824cfba9041098, type: 3}
+      propertyPath: HP
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8444807395753325326, guid: 6b7034ae02b4769429824cfba9041098, type: 3}
       propertyPath: leftLimit

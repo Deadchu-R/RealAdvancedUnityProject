@@ -72,7 +72,7 @@ public class enemyBehaviour : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            TakeDamage(1);
+            TakeDamage(5);
         }
     }
 
@@ -80,7 +80,7 @@ public class enemyBehaviour : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         currentHP -= dmg;
-        Debug.Log($"Enemy curreny HP is {currentHP}");
+        Debug.Log($"Enemy current HP is {currentHP}");
         anim.SetBool("isHit", true);
 
     }
