@@ -69,6 +69,7 @@ public class MovingPlatform : MonoBehaviour
         {
             moving = false;
             forward = false;
+            Debug.Log("2nd point");
 
         }
         else if (collision.gameObject.CompareTag("FirstP"))
