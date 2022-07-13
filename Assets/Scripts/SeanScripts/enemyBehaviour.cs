@@ -13,7 +13,7 @@ public class enemyBehaviour : MonoBehaviour
     [SerializeField] private Transform rightLimit;
     public GameObject hotZone;
     public GameObject triggerArea;
-    [HideInInspector] public Transform target;
+    public Transform target;
     [HideInInspector] public bool inRange; // check if Player is in range;
     private Animator anim;
     private float distance;  // Store the distance betwn enemy & player
@@ -90,9 +90,7 @@ public class enemyBehaviour : MonoBehaviour
     private void Died()
     {
         IsDead = true;
-        //anim.SetBool("IsDead", true);
-        //anim.SetBool("Attack1", false);
-        //anim.SetBool("Attack2", false);
+       
         anim.SetBool("canWalk", false);
         anim.SetBool("canAttack", false);
         anim.Play("EnemyDie");
@@ -112,7 +110,6 @@ public class enemyBehaviour : MonoBehaviour
         {
             canAttack = true;
             Attack();
-            //Invoke(nameof(Attack),1f);
         }
 
         if (cooling)
@@ -120,13 +117,7 @@ public class enemyBehaviour : MonoBehaviour
             Cooldown();
             anim.SetBool("CanAttack", false);
 
-            //if (attack2Active==false)
-            //{
-            //    anim.SetBool("Attack1", false);
-
-            //}
-            //else
-            //    anim.SetBool("Attack2", false);
+            
 
         }
 

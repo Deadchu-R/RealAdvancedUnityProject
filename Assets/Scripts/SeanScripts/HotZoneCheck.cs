@@ -24,10 +24,10 @@ public class HotZoneCheck : MonoBehaviour
                 {
                  enemyParent.Flip();
                 }
-                if (!_canFlip)
-                {
-                    Debug.Log("dont flip");
-                }
+                //if (!_canFlip)
+                //{
+                //    Debug.Log("dont flip");
+                //}
 
             }
         }
@@ -38,7 +38,7 @@ public class HotZoneCheck : MonoBehaviour
         if(collider.gameObject.CompareTag("Player"))
         {
             inRange = true;
-           _canFlip = false;
+           //_canFlip = false;
         }
     }
 
@@ -51,7 +51,7 @@ public class HotZoneCheck : MonoBehaviour
             enemyParent.triggerArea.SetActive(true);
             enemyParent.inRange = false;
             enemyParent.SelectTarget();
-            _canFlip = true;
+            //_canFlip = true;
        }
 
 
