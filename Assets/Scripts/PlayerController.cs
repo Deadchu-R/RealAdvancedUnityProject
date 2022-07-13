@@ -99,8 +99,9 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
-            
+        // playerCamera.transform.position = cameraLocationForPlayer.transform.position;
+        playerCamera.transform.position = new Vector3(cameraLocationForPlayer.transform.position.x,
+            cameraLocationForPlayer.transform.position.y, -10);
         if (_isFacingRight && moveDirection < 0)
         {
             
