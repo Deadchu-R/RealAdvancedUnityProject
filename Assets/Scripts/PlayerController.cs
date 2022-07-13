@@ -17,13 +17,14 @@ public class PlayerController : MonoBehaviour
     private int _attackNum;
     private float _moveSpeed = 1;
     private bool _canWalk = true;
+    private bool _isFacingRight = true;
     
     [Header("UI Elements")]
     [SerializeField] private GameObject checkPointCanvas;
     [SerializeField]  private Image healthBar;
     [SerializeField] private GameObject gameOver;
 
-    [Header("PlayerStats:")]
+    [Header("PlayerElements:")]
     public float maxHealth;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
@@ -31,8 +32,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private float fallMulti;
+
+    [SerializeField] private Camera playerCamera;
+    [SerializeField] private Transform cameraLocationForPlayer;
     private int _remainingJumps;
     private float _currentHealth;
+    private float moveDirection;
     
 
     [Header("Wall Jump Properties:")] 
@@ -40,6 +45,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask stickyWallMask;
    [SerializeField] private GameObject groundCheckObject;
    [SerializeField] private GameObject sidesCheckObject;
+   private float _sidesCheckPosX;
     private bool _grounded = true;
     private bool _wallJumping;
     private float _currentJumpForce;
@@ -70,10 +76,44 @@ public class PlayerController : MonoBehaviour
         _currentJumpForce = jumpForce;
         _remainingJumps = jumpTimes;
         _currentHealth = maxHealth;
+        _sidesCheckPosX = transform.position.x;
+    }
+
+    void Flip()
+    {
+
+        transform.Rotate(0f, 180f,0f);
+        
+        //  if (moveDirection > 0)
+        // {
+        //     sidesCheckObject.transform.localPosition = new Vector3(-0.091f, -0.01f, 0f);
+        //    
+        // }
+        // if (moveDirection < 0)
+        // {
+        //  
+        //     sidesCheckObject.transform.localPosition = new Vector3(-0.144f, -0.01f, 0f);
+        // }
+        _isFacingRight = !_isFacingRight;
     }
 
     private void Update()
     {
+
+            
+        if (_isFacingRight && moveDirection < 0)
+        {
+            
+            Flip();
+            
+        }
+        else if (!_isFacingRight && moveDirection > 0)
+        {
+      
+            Flip();
+            
+        }
+        // playerCamera.transform.position = cameraLocationForPlayer.position;
         LayerCheck();
         Testing();
         HealthBar();
@@ -114,6 +154,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Horizontal"))
         {
+            moveDirection = Input.GetAxisRaw("Horizontal");
             playerAni.SetBool(Walking, true);
         }
         if (!Input.GetButton("Horizontal"))
@@ -273,7 +314,7 @@ public class PlayerController : MonoBehaviour
         var groundPosition = groundCheckObject.transform.position;
         var sidesPosition = sidesCheckObject.transform.position;
         _grounded = Physics2D.OverlapBox(new Vector2(groundPosition.x , groundPosition.y), new Vector2(0.9f, 0.1f), 0f, groundMask); //checks if player touching the ground
-         _isTouchingLeft = Physics2D.OverlapBox(new Vector2(sidesPosition.x -0.9f , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from right
+        _isTouchingLeft = Physics2D.OverlapBox(new Vector2(sidesPosition.x -0.9f , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from right
          _isTouchingRight = Physics2D.OverlapBox(new Vector2(sidesPosition.x  , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from left
          
          if (_isTouchingLeft)

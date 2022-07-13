@@ -15,6 +15,7 @@ public class PlayerSword : MonoBehaviour
             enemyBehaviour enemyScript = col.gameObject.GetComponent<enemyBehaviour>(); 
             enemyScript.TakeDamage(attackDamage);
             Debug.Log("damage to enemy:" + attackDamage);
+         
         }
     }
 }
