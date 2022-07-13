@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class AmirUI : MonoBehaviour
+public class PlayerUI : MonoBehaviour
 {
     private Image healthBar;
     // public float currentHP;

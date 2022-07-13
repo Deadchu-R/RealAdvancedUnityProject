@@ -1,8 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Audio;
+﻿using UnityEngine;
 using DG.Tweening;
 using System.IO;
 using UnityEngine.UI;
@@ -11,33 +7,37 @@ public class PauseMenu : MonoBehaviour
 {
     private string _fileLocation;
     private string _saveMe;
-    public static bool GameIsPaused = false; // bool the check if game is pause 
-    public GameObject pauseMenu; // setting gameObject "pauseMenuUI" in the script
-    public GameObject SaveLoadSubMenu;
-    public GameObject optionSub;
-    public GameObject controlMenu;
-    public GameObject keyboardControls;
-    public GameObject controllerControls;
+    private static bool _gameIsPaused = false; // bool the check if game is pause 
+    [Header("PauseMenuElements")]
+    [SerializeField] private GameObject pauseMenu; // setting gameObject "pauseMenuUI" in the script
+    [SerializeField] private GameObject checkPointMenu;
+    [SerializeField] private GameObject optionSub;
+    [SerializeField] private GameObject controlMenu;
+    [SerializeField] private GameObject keyboardControls;
+    [SerializeField] private GameObject controllerControls;
 
-    public GameObject masterSlider;
-    public GameObject musicSlider;
-    public GameObject SFXSlider;
-
+    [SerializeField] private GameObject theUICanvas;
+    
+    [Header("VolumeElements")]
+    [SerializeField] private GameObject masterSliderObject;
+    [SerializeField] private GameObject musicSliderObject;
+    [SerializeField] private GameObject specialEffectsSliderObject;
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
-    [SerializeField] private Slider SFXVolumeSlider;
-    private string masterVolume;
-    private string musicVolume;
-    private string SFXVolume;
+    [SerializeField] private Slider specialEffectsVolumeSlider;
+    private string _masterVolume;
+    private string _musicVolume;
+    private string _theSfxVolume;
+    private bool _masterSliderOn = false;
+    private bool _musicSliderOn = false;
+    private bool _sfxSliderOn = false;
 
-    private bool optionsOn = false;
-    private bool masterSlideOn = false;
-    private bool musicSlideOn = false;
-    private bool SFXSlideOn = false;
+
+    private bool _optionsOn = false;
 
     private float animDuration = 1;
 
-
+[Header("EasterEggs")]
     public int easterEgg = 0;
     [SerializeField] private GameObject easterEgg1;
     [SerializeField] private GameObject easterEgg2;
@@ -54,12 +54,14 @@ public class PauseMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape)) // checking if player pressed Escape
         {
-            if (GameIsPaused == true) // if game is paused 
+            if (_gameIsPaused == true) // if game is paused 
             {
+                theUICanvas.SetActive(true);
                 Resume(); // will resume game through resume Method
             }
-            else if (GameIsPaused == false) // if game is not paused
+            else if (_gameIsPaused == false) // if game is not paused
             {
+                theUICanvas.SetActive(false);
                 Pause(); // will pause game through Pause method
             }
         }
@@ -70,10 +72,10 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(false); // setting the PauseMenu to not Active
         Time.timeScale = 1; // resuming Time
-        GameIsPaused = false; // setting gameIsPaused bool to false 
+        _gameIsPaused = false; // setting gameIsPaused bool to false 
         optionSub.transform.DOMoveX(970, animDuration).SetUpdate(true);
         ShutDown();
-        optionsOn = false;
+        _optionsOn = false;
         Debug.Log("Game is Resuming"); // debuging
 
         easterEgg = 0;
@@ -89,28 +91,28 @@ public class PauseMenu : MonoBehaviour
     {
         pauseMenu.SetActive(true); // setting pauseMenu to active
         Time.timeScale = 0; // pausing Time
-        GameIsPaused = true; // setting bool GameIsPause to true
+        _gameIsPaused = true; // setting bool GameIsPause to true
         Debug.Log("Game is Paused"); // debugging
     }
 
 
     public void OptionsSubMenu()
     {
-        if (optionsOn == false)
+        if (_optionsOn == false)
         {
             optionSub.SetActive(true);
             optionSub.transform.DOMoveX(1270, animDuration).SetUpdate(true);
-            optionsOn = true;
+            _optionsOn = true;
         }
-        else if (optionsOn == true)
+        else if (_optionsOn == true)
         {
-            masterSlider.SetActive(false);
-            musicSlider.SetActive(false);
-            SFXSlider.SetActive(false);
+            masterSliderObject.SetActive(false);
+            musicSliderObject.SetActive(false);
+            specialEffectsSliderObject.SetActive(false);
             Sequence seq2 = DOTween.Sequence();
             seq2.Append(optionSub.transform.DOMoveX(970, animDuration)).SetUpdate(true);
             seq2.OnComplete(ShutDown);
-            optionsOn = false;
+            _optionsOn = false;
         }
     }
     private void ShutDown()
@@ -120,15 +122,15 @@ public class PauseMenu : MonoBehaviour
 
     public void SaveVolumes()
     {
-        masterVolume = masterVolumeSlider.value.ToString();
-        musicVolume = musicVolumeSlider.value.ToString();
-        SFXVolume = SFXVolumeSlider.value.ToString();
+        _masterVolume = masterVolumeSlider.value.ToString();
+        _musicVolume = musicVolumeSlider.value.ToString();
+        _theSfxVolume = specialEffectsVolumeSlider.value.ToString();
 
-        Debug.Log("MasterVolume: " + masterVolume);
-        Debug.Log("MusicVolume: " + musicVolume);
-        Debug.Log("SFXVolume: " + SFXVolume);
+        Debug.Log("MasterVolume: " + _masterVolume);
+        Debug.Log("MusicVolume: " + _musicVolume);
+        Debug.Log("SFXVolume: " + _theSfxVolume);
 
-        _saveMe = $"{masterVolume}\n {musicVolume}\n {SFXVolume}\n";
+        _saveMe = $"{_masterVolume}\n {_musicVolume}\n {_theSfxVolume}\n";
         File.Delete(_fileLocation);
         File.AppendAllText(_fileLocation, _saveMe);
         Debug.Log("Saved: \n" + _saveMe);
@@ -136,57 +138,57 @@ public class PauseMenu : MonoBehaviour
 
     public void OptionsOnOff()
     {
-        if (optionsOn == false)
+        if (_optionsOn == false)
         {
-            optionsOn = true;
+            _optionsOn = true;
         }
-        else if (optionsOn == true)
+        else if (_optionsOn == true)
         {
             SaveVolumes();
-            optionsOn = false;
+            _optionsOn = false;
         }
     }
 
-    public void MasterSlide()
+    public void MasterSlider()
     {
-        if (masterSlideOn == false)
+        if (_masterSliderOn == false)
         {
-            masterSlider.SetActive(true);
-            masterSlideOn = true;
+            masterSliderObject.SetActive(true);
+            _masterSliderOn = true;
         }
-        else if (masterSlideOn == true)
+        else if (_masterSliderOn == true)
         {
-            masterSlider.SetActive(false);
-            masterSlideOn = false;
+            masterSliderObject.SetActive(false);
+            _masterSliderOn = false;
         }
 
     }
 
-    public void MusicSlide()
+    public void MusicSlider()
     {
-        if (musicSlideOn == false)
+        if (_musicSliderOn == false)
         {
-            musicSlider.SetActive(true);
-            musicSlideOn = true;
+            musicSliderObject.SetActive(true);
+            _musicSliderOn = true;
         }
-        else if (musicSlideOn == true)
+        else if (_musicSliderOn == true)
         {
-            musicSlider.SetActive(false);
-            musicSlideOn = false;
+            musicSliderObject.SetActive(false);
+            _musicSliderOn = false;
         }
     }
 
-    public void SFXSlide()
+    public void SpecialEffectsSlider()
     {
-        if (SFXSlideOn == false)
+        if (_sfxSliderOn == false)
         {
-            SFXSlider.SetActive(true);
-            SFXSlideOn = true;
+            specialEffectsSliderObject.SetActive(true);
+            _sfxSliderOn = true;
         }
-        else if (SFXSlideOn == true)
+        else if (_sfxSliderOn == true)
         {
-            SFXSlider.SetActive(false);
-            SFXSlideOn = false;
+            specialEffectsSliderObject.SetActive(false);
+            _sfxSliderOn = false;
         }
     }
 
