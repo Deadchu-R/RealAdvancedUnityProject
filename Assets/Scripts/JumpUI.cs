@@ -6,8 +6,7 @@ using UnityEngine.UI;
 public class JumpUI : MonoBehaviour
 {
 
-    [SerializeField] private int jumpCount = 2;
-    [SerializeField] private Text jumpCounter;
+
     [SerializeField] private int enemyCount = 5;
     [SerializeField] private Text enemyCounter;
     [SerializeField] private int loseTimerSecs = 50; // used for loseCondition
@@ -19,7 +18,7 @@ public class JumpUI : MonoBehaviour
     {
         InvokeRepeating("updateTimer", 1, 1);
         enemyCounter.text = "Remaining enemys: " + enemyCount;
-        jumpCounter.text = "Jumps : " + jumpCount;
+
         //jumpCount = ;
     }
 
@@ -27,29 +26,12 @@ public class JumpUI : MonoBehaviour
     void Update()
     {
         enemyCounter.text = "Remaining enemys: " + enemyCount;
-        jumpCounter.text = "Jumps : " + jumpCount;
-        JumpTest();
+
         EnemyCount();
         //jumpCount = 2;
     }
                                                                    
-    public void JumpTest()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            if (jumpCount != 0)
-            {
-                Debug.Log("Jumping");
-                jumpCount--;
-            }
-            else if (jumpCount == 0)
-            {
-                Debug.Log("No jumps remaining");
-                jumpCount =+ 2;
-            }
-        }
-        return;
-    }
+
 
     public void EnemyCount()
     {
