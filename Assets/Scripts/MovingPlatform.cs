@@ -1,26 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] private Vector3 velocity;
+    private bool moving = false;
+    private bool forward = true;
+    [SerializeField] private GameObject firstPoint;
+    [SerializeField] private GameObject secondPoint;
     [SerializeField] private GameObject switchPoint;
-    [FormerlySerializedAs("Platform")] [SerializeField] private GameObject platform;
+    [SerializeField] private GameObject returnPoint;
+    [SerializeField] private GameObject Platform;
     [SerializeField] private GameObject leftPlatformCollider;
     [SerializeField] private GameObject rightPlatformCollider;
-    private bool _moving = false;
-    private bool _forward = true;
 
 
 
 
     private void FixedUpdate()
     {
-        if (_moving && _forward)
+        if (moving && forward)
         {
             transform.position += (velocity * Time.deltaTime);
         }
-        else if (_moving && !_forward)
+        else if (moving && !forward)
         {
             transform.position -= (velocity * Time.deltaTime);
         }
@@ -33,7 +37,7 @@ public class MovingPlatform : MonoBehaviour
             leftPlatformCollider.gameObject.SetActive(true);
             rightPlatformCollider.gameObject.SetActive(true);
             collision.collider.transform.SetParent(transform);
-            _moving = true;
+            moving = true;
         }
     }
 
@@ -43,7 +47,7 @@ public class MovingPlatform : MonoBehaviour
         {
             leftPlatformCollider.gameObject.SetActive(false);
             rightPlatformCollider.gameObject.SetActive(false);
-            _moving = false;
+            moving = false;
             collision.collider.transform.SetParent(null);
         }
     }
@@ -53,25 +57,25 @@ public class MovingPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("SwitchPoint"))
         {
             switchPoint.transform.SetParent(transform);
-            platform.transform.SetParent(null);
+            Platform.transform.SetParent(null);
         }
         else if (collision.gameObject.CompareTag("ReturnPoint"))
         {
             switchPoint.transform.SetParent(null);
-            platform.transform.SetParent(transform);
+            Platform.transform.SetParent(transform);
         }
 
         else if (collision.gameObject.CompareTag("SecondP"))
         {
-            _moving = false;
-            _forward = false;
+            moving = false;
+            forward = false;
             Debug.Log("2nd point");
 
         }
         else if (collision.gameObject.CompareTag("FirstP"))
         {
-            _moving = false;
-            _forward = true;
+            moving = false;
+            forward = true;
         }
 
 

@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     private static bool _gameIsPaused = false; // bool the check if game is pause 
     [Header("PauseMenuElements")]
     [SerializeField] private GameObject pauseMenu; // setting gameObject "pauseMenuUI" in the script
+    [SerializeField] private GameObject checkPointMenu;
     [SerializeField] private GameObject optionSub;
     [SerializeField] private GameObject controlMenu;
     [SerializeField] private GameObject keyboardControls;
@@ -33,6 +34,7 @@ public class PauseMenu : MonoBehaviour
 
 
     private bool _optionsOn = false;
+
     private float animDuration = 1;
 
 [Header("EasterEggs")]
@@ -48,7 +50,7 @@ public class PauseMenu : MonoBehaviour
     }
 
     // method to pause or unpause the game
-    private void EscapeButton()
+    public void EscapeButton()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) // checking if player pressed Escape
         {
@@ -74,7 +76,7 @@ public class PauseMenu : MonoBehaviour
         optionSub.transform.DOMoveX(970, animDuration).SetUpdate(true);
         ShutDown();
         _optionsOn = false;
-        Debug.Log("Game is Resuming"); // debugging
+        Debug.Log("Game is Resuming"); // debuging
 
         easterEgg = 0;
         easterEgg1.SetActive(false);
@@ -85,7 +87,7 @@ public class PauseMenu : MonoBehaviour
 
 
     // a method to pause game
-    private void Pause()
+    public void Pause()
     {
         pauseMenu.SetActive(true); // setting pauseMenu to active
         Time.timeScale = 0; // pausing Time

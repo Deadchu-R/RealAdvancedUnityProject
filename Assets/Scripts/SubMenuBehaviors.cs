@@ -1,10 +1,11 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Serialization;
 
 public class SubMenuBehaviors : MonoBehaviour
 {
-    public Transform startSubMenu;
+    public Transform startsubMenu;
     public Transform optionSubMenu;
 
     public GameObject mainMenu;
@@ -17,50 +18,50 @@ public class SubMenuBehaviors : MonoBehaviour
 
     public GameObject masterSlider;
     public GameObject musicSlider;
-    [FormerlySerializedAs("SFXSlider")] public GameObject sfxSlider;
+    public GameObject SFXSlider;
 
-    private bool _start = false;
-    private bool _options = false;
-    private bool _masterSlideOn = false;
-    private bool _musicSlideOn = false;
-    private bool _sfxSlideOn = false;
+    private bool start = false;
+    private bool options = false;
+    private bool masterSlideOn = false;
+    private bool musicSlideOn = false;
+    private bool SFXSlideOn = false;
 
     private float animDuration = 1.2f;
 
     public void StartSubMenu()
     {
-        if (_start == false)
+        if (start == false)
         {
             startSub.SetActive(true);
-            startSubMenu.DOMoveX(750, animDuration);
-            _start = true;
+            startsubMenu.DOMoveX(750, animDuration);
+            start = true;
         }
-        else if (_start)
+        else if (start == true)
         {
             Sequence seq = DOTween.Sequence();
-            seq.Append(startSubMenu.DOMoveX(450, animDuration));
+            seq.Append(startsubMenu.DOMoveX(450, animDuration));
             seq.OnComplete(ShutDown);
-            _start = false;
+            start = false;
         }
     }
 
     public void OptionsSubMenu()
     {
-        if (_options == false)
+        if (options == false)
         {
             optionSub.SetActive(true);
             optionSubMenu.DOMoveX(1280, animDuration);
-            _options = true;
+            options = true;
         }
-        else if (_options)
+        else if (options == true)
         {
             masterSlider.SetActive(false);
             musicSlider.SetActive(false);
-            sfxSlider.SetActive(false);
+            SFXSlider.SetActive(false);
             Sequence seq2 = DOTween.Sequence();
             seq2.Append(optionSubMenu.DOMoveX(970, animDuration));
             seq2.OnComplete(ShutDown);
-            _options = false;
+            options = false;
         }
     }
     private void ShutDown()
@@ -71,44 +72,44 @@ public class SubMenuBehaviors : MonoBehaviour
 
     public void MasterSlide()
     {
-        if (_masterSlideOn == false )
+        if (masterSlideOn == false )
         {
             masterSlider.SetActive(true);
-            _masterSlideOn = true;
+            masterSlideOn = true;
         }
-        else if (_masterSlideOn)
+        else if (masterSlideOn == true)
         {
             masterSlider.SetActive(false);
-            _masterSlideOn = false;
+            masterSlideOn = false;
         }
         
     }
 
     public void MusicSlide()
     {
-        if (_musicSlideOn == false)
+        if (musicSlideOn == false)
         {
             musicSlider.SetActive(true);
-            _musicSlideOn = true;
+            musicSlideOn = true;
         }
-        else if (_musicSlideOn)
+        else if (musicSlideOn == true)
         {
             musicSlider.SetActive(false);
-            _musicSlideOn = false;
+            musicSlideOn = false;
         }
     }
 
-    public void SfxSlide()
+    public void SFXSlide()
     {
-        if (_sfxSlideOn == false)
+        if (SFXSlideOn == false)
         {
-            sfxSlider.SetActive(true);
-            _sfxSlideOn = true;
+            SFXSlider.SetActive(true);
+            SFXSlideOn = true;
         }
-        else if (_sfxSlideOn == true)
+        else if (SFXSlideOn == true)
         {
-            sfxSlider.SetActive(false);
-            _sfxSlideOn = false;
+            SFXSlider.SetActive(false);
+            SFXSlideOn = false;
         }
     }
 

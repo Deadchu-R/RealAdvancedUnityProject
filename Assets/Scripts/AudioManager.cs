@@ -1,7 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using System.IO;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
@@ -11,11 +12,11 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioMixer mixer;
     [SerializeField] private Slider masterVolumeSlider;
     [SerializeField] private Slider musicVolumeSlider;
-    [FormerlySerializedAs("SFXVolumeSlider")] [SerializeField] private Slider sfxVolumeSlider;
-    private string _masterVolume;
-    private string _musicVolume;
-    private string _sfxVolume;
-    private bool _optionsOn = false;
+    [SerializeField] private Slider SFXVolumeSlider;
+    private string masterVolume;
+    private string musicVolume;
+    private string SFXVolume;
+    private bool optionsOn = false;
 
     private void Start()
     {
@@ -26,20 +27,20 @@ public class AudioManager : MonoBehaviour
     public void MasterLevel(float sliderValue)
     {
         mixer.SetFloat("MasterVolume", Mathf.Log10(sliderValue) * 20);
-        _masterVolume = sliderValue.ToString();
-        
+        masterVolume = sliderValue.ToString();
+        //Debug.Log("Mastervolume set to : " + masterVolume);
     }
 
     public void MusicLevel(float sliderValue)
     {
         mixer.SetFloat("MusicVolume", Mathf.Log10(sliderValue) * 20);
-        _musicVolume = sliderValue.ToString();
+        musicVolume = sliderValue.ToString();
     }
 
     public void SFXLevel(float sliderValue)
     {
         mixer.SetFloat("SFXVolume", Mathf.Log10(sliderValue) * 20);
-        _sfxVolume = sliderValue.ToString();
+        SFXVolume = sliderValue.ToString();
         
     }
 
@@ -56,24 +57,24 @@ public class AudioManager : MonoBehaviour
             string[] allSavedVolumes = File.ReadAllLines(_fileLocation);
             string masterVolumeValue = allSavedVolumes[0];
             string musicVolumeValue = allSavedVolumes[1];
-            string sfxVolumeValue = allSavedVolumes[2];
+            string SFXVolumeValue = allSavedVolumes[2];
             masterVolumeSlider.value = float.Parse(masterVolumeValue);
             musicVolumeSlider.value = float.Parse(musicVolumeValue);
-            sfxVolumeSlider.value = float.Parse(sfxVolumeValue);
+            SFXVolumeSlider.value = float.Parse(SFXVolumeValue);
         }
     }
 
     public void SaveVolumes()
     {
-        _masterVolume = masterVolumeSlider.value.ToString();
-        _musicVolume = musicVolumeSlider.value.ToString();
-        _sfxVolume = sfxVolumeSlider.value.ToString();
+        masterVolume = masterVolumeSlider.value.ToString();
+        musicVolume = musicVolumeSlider.value.ToString();
+        SFXVolume = SFXVolumeSlider.value.ToString();
 
-        Debug.Log("MasterVolume: " + _masterVolume);
-        Debug.Log("MusicVolume: " + _musicVolume);
-        Debug.Log("SFXVolume: " + _sfxVolume);
+        Debug.Log("MasterVolume: " + masterVolume);
+        Debug.Log("MusicVolume: " + musicVolume);
+        Debug.Log("SFXVolume: " + SFXVolume);
 
-        _saveMe = $"{_masterVolume}\n {_musicVolume}\n {_sfxVolume}\n";
+        _saveMe = $"{masterVolume}\n {musicVolume}\n {SFXVolume}\n";
         File.Delete(_fileLocation);
         File.AppendAllText(_fileLocation, _saveMe);
         Debug.Log("Saved: \n" + _saveMe);
@@ -81,15 +82,19 @@ public class AudioManager : MonoBehaviour
 
     public void OptionsOnOff()
     {
-        if (_optionsOn == false)
+        if (optionsOn == false)
         {
-            _optionsOn = true;
+            optionsOn = true;
         }
-        else if (_optionsOn)
+        else if (optionsOn == true)
         {
             SaveVolumes();
-            _optionsOn = false;
+            optionsOn = false;
         }
     }
 
+    void Update()
+    {
+
+    }
 }
