@@ -7,6 +7,7 @@ public class HotZoneCheck : MonoBehaviour
     private enemyBehaviour enemyParent;
     private bool inRange;
     private Animator anim;
+    private bool _canFlip = true;
 
     private void Awake()
     {
@@ -19,7 +20,15 @@ public class HotZoneCheck : MonoBehaviour
         {
             if (inRange && !anim.GetCurrentAnimatorStateInfo(0).IsName("attack-A1"))
             {
-                enemyParent.Flip();
+                if (_canFlip)
+                {
+                 enemyParent.Flip();
+                }
+                if (!_canFlip)
+                {
+                    Debug.Log("dont flip");
+                }
+
             }
         }
     }
@@ -29,19 +38,23 @@ public class HotZoneCheck : MonoBehaviour
         if(collider.gameObject.CompareTag("Player"))
         {
             inRange = true;
+           _canFlip = false;
         }
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
        if(collider.gameObject.CompareTag("Player"))
-        {
+       {
             inRange = false;
             gameObject.SetActive(false);
             enemyParent.triggerArea.SetActive(true);
             enemyParent.inRange = false;
             enemyParent.SelectTarget();
-        }
+            _canFlip = true;
+       }
+
+
     }
 }
 

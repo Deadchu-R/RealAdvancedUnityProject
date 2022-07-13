@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class UnityEvents : MonoBehaviour
 {
-    private void OnEnable()
-    {
-        LevelManager.OnClicked += Teleport;   //subscribes it to the event
-    }
-
-    private void OnDisable()
-    {
-        LevelManager.OnClicked -= Teleport;  //unsubscribes it to the event
-    }
+    // private void OnEnable()
+    // {
+    //     LevelManager.OnClicked += Teleport;   //subscribes it to the event
+    // }
+    //
+    // private void OnDisable()
+    // {
+    //     LevelManager.OnClicked -= Teleport;  //unsubscribes it to the event
+    // }
 
     void Teleport()
     {

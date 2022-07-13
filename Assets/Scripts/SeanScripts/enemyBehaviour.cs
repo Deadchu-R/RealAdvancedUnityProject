@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -25,9 +26,10 @@ public class enemyBehaviour : MonoBehaviour
     private float intTimer;
     [SerializeField] private float destroyTimer;
 
-    [SerializeField] private int HP = 5;
-    private int currentHP;
-    [SerializeField] private float attackDamage;
+    [SerializeField] private float HP = 5;
+    private float currentHP;
+    public float attackDamage;
+    public bool canFlip = true;
 
 
 
@@ -77,7 +79,7 @@ public class enemyBehaviour : MonoBehaviour
     }
 
 
-    public void TakeDamage(int dmg)
+    public void TakeDamage(float dmg)
     {
         currentHP -= dmg;
         Debug.Log($"Enemy current HP is {currentHP}");
@@ -93,7 +95,7 @@ public class enemyBehaviour : MonoBehaviour
         //anim.SetBool("Attack2", false);
         anim.SetBool("canWalk", false);
         anim.SetBool("canAttack", false);
-        anim.Play("Enemy_Dead");
+        anim.Play("EnemyDie");
         Destroy(gameObject, anim.GetCurrentAnimatorStateInfo(0).length);
     }
 
@@ -209,9 +211,18 @@ public class enemyBehaviour : MonoBehaviour
             target = rightLimit;
         }
 
-        Flip();
+        if (canFlip)
+        {
+         Flip();
+        }
+        else
+        {
+            Debug.Log("cant flip");
+        }
 
     }
+
+
 
     public void Flip()
     {

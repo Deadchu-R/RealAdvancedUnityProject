@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
     public float maxHealth;
     [SerializeField] private float walkSpeed;
     [SerializeField] private float runSpeed;
-    [SerializeField] private int attackDamage;
+    [SerializeField] private float attackDamage;
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private float fallMulti;
@@ -303,7 +303,7 @@ public class PlayerController : MonoBehaviour
 
 
 
-    public void Damage(int dmg)
+    public void Damage(float dmg)
     {
         playerAni.SetTrigger(Hit);
         _currentHealth -= dmg;
@@ -359,11 +359,12 @@ public class PlayerController : MonoBehaviour
             GameOver();
         }
 
-        if (col.gameObject.CompareTag("Enemy 1"))
-        {
-            enemyBehaviour enemyScript = col.gameObject.GetComponent<enemyBehaviour>(); // will get component from Garfield Garfield Script
-            enemyScript.TakeDamage(attackDamage);
-        }
+        // if (col.gameObject.CompareTag("Enemy 1"))
+        // {
+        //     enemyBehaviour enemyScript = col.gameObject.GetComponent<enemyBehaviour>(); 
+        //     enemyScript.TakeDamage(attackDamage);
+        //     Debug.Log("damage to enemy:" + attackDamage);
+        // }
     }
 
     public void SavePlayerAtCheckPoint()

@@ -15,6 +15,9 @@ TagManager:
   - EnemyLimits
   - SwitchPoint
   - ReturnPoint
+  - Sliders
+  - PlayerSword
+  - enemyHotZone
   layers:
   - Default
   - TransparentFX
