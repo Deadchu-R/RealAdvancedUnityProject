@@ -5,6 +5,18 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
 
+    [Header("Animations Properties:")]
+    private static readonly int Walking = Animator.StringToHash("Walking");
+    private static readonly int Running = Animator.StringToHash("Running");
+    private static readonly int AttackTrigger = Animator.StringToHash("Attack");
+    private static readonly int AttackState = Animator.StringToHash("AttackState");
+    private static readonly int Shield = Animator.StringToHash("Shield");
+    private static readonly int Jumping = Animator.StringToHash("Jumping");
+    private static readonly int Hit = Animator.StringToHash("Hit");
+    private static readonly int Dead = Animator.StringToHash("Dead");
+    private static readonly int Retry = Animator.StringToHash("Retry");
+    [SerializeField] private Animator playerAni;
+    [SerializeField] private AnimationClip[] attackAnimations;
 
     [Header("Actions Booleans and numbers")]
     private float _moveHorizontal;
@@ -27,8 +39,8 @@ public class PlayerController : MonoBehaviour
     [Header("PlayerElements:")]
     public float maxHealth;
     [SerializeField] private float walkSpeed;
+    [SerializeField] private Text jumpText;
     [SerializeField] private float runSpeed;
-    [SerializeField] private float attackDamage;
     [SerializeField] private int jumpTimes = 2;
     [SerializeField] private float jumpForce = 7;
     [SerializeField] private float fallMulti;
@@ -37,7 +49,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform cameraLocationForPlayer;
     private int _remainingJumps;
     private float _currentHealth;
-    private float moveDirection;
+    private float _moveDirection;
     
 
     [Header("Wall Jump Properties:")] 
@@ -45,8 +57,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask stickyWallMask;
    [SerializeField] private GameObject groundCheckObject;
    [SerializeField] private GameObject sidesCheckObject;
-   private float _sidesCheckPosX;
-    private bool _grounded = true;
+   private bool _grounded = true;
     private bool _wallJumping;
     private float _currentJumpForce;
     private bool _isTouchingRight;
@@ -58,25 +69,12 @@ public class PlayerController : MonoBehaviour
     [Header("RigidBodies and Colliders:")]
     [SerializeField] private Rigidbody2D rigidBody;
 
-    [Header("Animations Properties:")]
-    [SerializeField] private Animator playerAni;
-    [SerializeField] private AnimationClip[] attackAnimations;
-    private static readonly int Walking = Animator.StringToHash("Walking");
-    private static readonly int Running = Animator.StringToHash("Running");
-    private static readonly int AttackTrigger = Animator.StringToHash("Attack");
-    private static readonly int AttackState = Animator.StringToHash("AttackState");
-    private static readonly int Shield = Animator.StringToHash("Shield");
-    private static readonly int Jumping = Animator.StringToHash("Jumping");
-    private static readonly int Hit = Animator.StringToHash("Hit");
-    private static readonly int Dead = Animator.StringToHash("Dead");
-    private static readonly int Retry = Animator.StringToHash("Retry");
 
     private void Awake()
     {
         _currentJumpForce = jumpForce;
         _remainingJumps = jumpTimes;
         _currentHealth = maxHealth;
-        _sidesCheckPosX = transform.position.x;
     }
 
     void Flip()
@@ -99,21 +97,21 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-
-            
-        if (_isFacingRight && moveDirection < 0)
+        jumpText.text = ":" + _remainingJumps;
+        playerCamera.transform.position = new Vector3(cameraLocationForPlayer.transform.position.x, cameraLocationForPlayer.transform.position.y, -10);
+        if (_isFacingRight && _moveDirection < 0)
         {
             
             Flip();
             
         }
-        else if (!_isFacingRight && moveDirection > 0)
+        else if (!_isFacingRight && _moveDirection > 0)
         {
       
             Flip();
             
         }
-        // playerCamera.transform.position = cameraLocationForPlayer.position;
+      
         LayerCheck();
         Testing();
         HealthBar();
@@ -154,7 +152,7 @@ public class PlayerController : MonoBehaviour
         }
         if (Input.GetButton("Horizontal"))
         {
-            moveDirection = Input.GetAxisRaw("Horizontal");
+            _moveDirection = Input.GetAxisRaw("Horizontal");
             playerAni.SetBool(Walking, true);
         }
         if (!Input.GetButton("Horizontal"))
@@ -399,13 +397,6 @@ public class PlayerController : MonoBehaviour
             rigidBody.gravityScale = 1;
             GameOver();
         }
-
-        // if (col.gameObject.CompareTag("Enemy 1"))
-        // {
-        //     enemyBehaviour enemyScript = col.gameObject.GetComponent<enemyBehaviour>(); 
-        //     enemyScript.TakeDamage(attackDamage);
-        //     Debug.Log("damage to enemy:" + attackDamage);
-        // }
     }
 
     public void SavePlayerAtCheckPoint()

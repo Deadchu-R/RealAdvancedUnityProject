@@ -2842,7 +2842,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1671100215}
         m_TargetAssemblyTypeName: SubMenuBehaviors, Assembly-CSharp
-        m_MethodName: SFXSlide
+        m_MethodName: SfxSlide
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

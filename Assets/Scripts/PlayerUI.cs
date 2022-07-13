@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class PlayerUI : MonoBehaviour
 {
-    private Image healthBar;
-    // public float currentHP;
-    // private float maxHP = 20f;
+    private Image _healthBar;
+
     [SerializeField] private GameObject gameOver;
 
 
@@ -24,40 +21,16 @@ public class PlayerUI : MonoBehaviour
     {
 
         //maxHP = ; 
-        healthBar = GetComponent<Image>();
+        _healthBar = GetComponent<Image>();
         //Player = FindObjectOfType<PlayerController_script>();
     }
-
-    void Update()
-    {
-        GameOver();
-
-        // healthBar.fillAmount = currentHP / maxHP;
-    }
+    
 
     public void HealthBar(float currentHealth, float maxHealth)
     {
-        healthBar.fillAmount = currentHealth / maxHealth;
+        _healthBar.fillAmount = currentHealth / maxHealth;
     }
 
-    public void LostHP()
-    {
-  
-    }
-
-    public void RecoverHP()
-    {
-
-    }
-
-    public void GameOver()
-    {
-        // if (currentHP <= 0)
-        // {
-        //     gameOver.SetActive(true);
-        //     Time.timeScale = 0;
-        // }
-    }
 
     public void Retry()
     {
