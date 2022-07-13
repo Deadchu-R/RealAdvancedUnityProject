@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37876534, g: 0.3375779, b: 0.38936374, a: 1}
+  m_IndirectSpecularColor: {r: 0.3787922, g: 0.33760807, b: 0.3893915, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3805,7 +3805,7 @@ PrefabInstance:
       objectReference: {fileID: 1301248613}
     - target: {fileID: 1545516826748517052, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MusicSlide
+      value: MusicSlider
       objectReference: {fileID: 0}
     - target: {fileID: 1545516827091924683, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3821,7 +3821,7 @@ PrefabInstance:
       objectReference: {fileID: 1301248613}
     - target: {fileID: 1545516827110647709, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: SFXSlide
+      value: SpecialEffectsSlider
       objectReference: {fileID: 0}
     - target: {fileID: 1545516827192798900, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -4056,12 +4056,24 @@ PrefabInstance:
       value: 110.2789
       objectReference: {fileID: 0}
     - target: {fileID: 1545516828300427676, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8771667
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545516828300427676, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.031985
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545516828300427676, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.031985
+      objectReference: {fileID: 0}
+    - target: {fileID: 1545516828300427676, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -604
+      value: -652
       objectReference: {fileID: 0}
     - target: {fileID: 1545516828300427676, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 335
+      value: 187
       objectReference: {fileID: 0}
     - target: {fileID: 1545516828417024226, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_IsActive
@@ -4077,7 +4089,7 @@ PrefabInstance:
       objectReference: {fileID: 1301248613}
     - target: {fileID: 1545516828510904637, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: MasterSlide
+      value: MasterSlider
       objectReference: {fileID: 0}
     - target: {fileID: 1545516828510904639, guid: bd6dd67d29800394a8f6be8d9934e45b, type: 3}
       propertyPath: m_IsActive
@@ -5523,14 +5535,14 @@ RectTransform:
   m_GameObject: {fileID: 1861517341}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -15108.002}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8175163, y: 1.05798, z: 1.05798}
   m_Children: []
   m_Father: {fileID: 2042750478}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -638, y: 195}
+  m_AnchoredPosition: {x: -275, y: 184}
   m_SizeDelta: {x: 539.4519, y: 123.571}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1861517343
