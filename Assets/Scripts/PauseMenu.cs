@@ -46,13 +46,13 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        EscapeButton(); // method to use Escape Button in order to pause or unPause the game
+        PauseButton(); // method to use Escape Button in order to pause or unPause the game
     }
 
     // method to pause or unpause the game
-    public void EscapeButton()
+    public void PauseButton()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) // checking if player pressed Escape
+        if (Input.GetButtonDown("Pause")) // checking if player pressed Escape
         {
             if (_gameIsPaused == true) // if game is paused 
             {

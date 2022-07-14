@@ -12,15 +12,24 @@ public class CheckPoint : MonoBehaviour
   private void Update()
   {
       
-      if (Input.GetKeyDown(KeyCode.KeypadEnter))
+      if (Input.GetButtonDown("Interact"))
       {
           if (canPress == true)
           {
            _checkPointCanvas.SetActive(true);
            Time.timeScale = 0;
           }
-
+      
       }
+      // if (Input.GetKeyDown(KeyCode.KeypadEnter))
+      // {
+      //     if (canPress == true)
+      //     {
+      //         _checkPointCanvas.SetActive(true);
+      //         Time.timeScale = 0;
+      //     }
+      //
+      // }
   }
 
 
