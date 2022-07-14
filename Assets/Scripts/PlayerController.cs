@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
     [Header("Animations Properties:")]
     private static readonly int Walking = Animator.StringToHash("Walking");
     private static readonly int Running = Animator.StringToHash("Running");
@@ -50,25 +49,20 @@ public class PlayerController : MonoBehaviour
     private float _currentHealth;
     private float _moveDirection;
     
-
     [Header("Wall Jump Properties:")] 
     [SerializeField] private LayerMask groundMask;
     [SerializeField] private LayerMask stickyWallMask;
-   [SerializeField] private GameObject groundCheckObject;
-   [SerializeField] private GameObject sidesCheckObject;
-   private bool _grounded = true;
-    private bool _wallJumping;
+    [SerializeField] private GameObject groundCheckObject;
+    [SerializeField] private GameObject sidesCheckObject;
+    private bool _grounded = true; private bool _wallJumping;
     private float _currentJumpForce;
     private bool _isTouchingRight;
     private bool _isTouchingLeft;
     private int _touchingLeftOrRight;
-
-
     
     [Header("RigidBodies and Colliders:")]
     [SerializeField] private Rigidbody2D rigidBody;
-
-
+    
     private void Awake()
     {
         _currentJumpForce = jumpForce;
@@ -78,9 +72,8 @@ public class PlayerController : MonoBehaviour
 
     private void Flip()
     {
-
         transform.Rotate(0f, 180f,0f);
-        
+                           // ---it's here for future fixes---
         //  if (_moveDirection > 0)
         // {
         //     sidesCheckObject.transform.localPosition = new Vector3(-0.091f, -0.01f, 0f);
@@ -91,6 +84,7 @@ public class PlayerController : MonoBehaviour
         //  
         //     sidesCheckObject.transform.localPosition = new Vector3(-0.144f, -0.01f, 0f);
         // }
+                            // ---it's here for future fixes---
         _isFacingRight = !_isFacingRight;
     }
 
@@ -103,8 +97,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-     
-
         jumpsText.text = ":" + _remainingJumps;
         CameraFollow();
         LayerCheck();
@@ -119,11 +111,8 @@ public class PlayerController : MonoBehaviour
         {
             Flip();
         }
-        
     }
-
-
-
+    
     private void HealthBar()
     {
         healthBar.fillAmount = _currentHealth / maxHealth;
@@ -172,7 +161,6 @@ public class PlayerController : MonoBehaviour
             { 
                 _moreJump = true;
                 _remainingJumps--;
-        
             }
             else
             {
@@ -189,7 +177,6 @@ public class PlayerController : MonoBehaviour
              _doJump = true;
             }
             _canWalk = true;
-          
         }
     }
 
@@ -211,8 +198,6 @@ public class PlayerController : MonoBehaviour
         {
          Attack(_attackNum);
         }
-        
-
         ShieldBlock();
         if (_canWalk)
         {
@@ -220,7 +205,6 @@ public class PlayerController : MonoBehaviour
         }
         Jump();
         WallJump();
-
     }
 
     private void WallJump()
@@ -241,7 +225,6 @@ public class PlayerController : MonoBehaviour
             playerAni.SetInteger(AttackState, attackNumber);
             _attack = false;
         }
-
     }
 
     private void ShieldBlock()
@@ -252,22 +235,18 @@ public class PlayerController : MonoBehaviour
          _shieldUp = false;
          Debug.Log("shield");
         }
-
     }
 
     private void Move()
     {
         _moveHorizontal = Input.GetAxisRaw("Horizontal");
-        
         if (_moveHorizontal > 0.1f || _moveHorizontal < -0.1f)
         {
             rigidBody.AddForce(new Vector2(_moveHorizontal * _moveSpeed, 0f), ForceMode2D.Impulse);
         }
-        
     }
     private void Jump()
     {
-  
         if (_doJump)
         {
             if (_grounded)
@@ -313,7 +292,6 @@ public class PlayerController : MonoBehaviour
         _grounded = Physics2D.OverlapBox(new Vector2(groundPosition.x , groundPosition.y), new Vector2(0.9f, 0.1f), 0f, groundMask); //checks if player touching the ground
         _isTouchingLeft = Physics2D.OverlapBox(new Vector2(sidesPosition.x -0.9f , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from right
          _isTouchingRight = Physics2D.OverlapBox(new Vector2(sidesPosition.x  , sidesPosition.y), new Vector2(0.1f,2.7f), 0f , stickyWallMask); // checks if player touching a stickWall from left
-         
          if (_isTouchingLeft)
          {
              _touchingLeftOrRight = 1;
@@ -331,10 +309,8 @@ public class PlayerController : MonoBehaviour
         var sidesPosition = sidesCheckObject.transform.position;
         Gizmos.color = Color.green;
         Gizmos.DrawCube(new Vector2(groundPosition.x , groundPosition.y), new Vector2(0.9f,0.1f));
-        
         Gizmos.color = Color.blue;
         Gizmos.DrawCube(new Vector2(sidesPosition.x -0.9f , sidesPosition.y), new Vector2(0.1f,2.7f));
-        
         Gizmos.color = Color.blue;
         Gizmos.DrawCube(new Vector2(sidesPosition.x  , sidesPosition.y), new Vector2(0.1f,2.7f));
     }
@@ -346,7 +322,6 @@ public class PlayerController : MonoBehaviour
         playerAni.SetTrigger(Hit);
         _currentHealth -= dmg;
         Debug.Log($"got:{dmg} dmg");
-
         if (_currentHealth <= 0)
         {
             Died();
@@ -355,7 +330,6 @@ public class PlayerController : MonoBehaviour
 
     private void Died()
     {
-        
         Debug.Log("Died");
             playerAni.SetTrigger(Dead);
             playerAni.SetBool(Retry, false);
@@ -390,26 +364,16 @@ public class PlayerController : MonoBehaviour
             _remainingJumps = jumpTimes;
             Debug.Log($"refilled jumps to {_remainingJumps}");
         }
-
         if (col.gameObject.CompareTag("FallLimiter"))
         {
             rigidBody.gravityScale = 1;
             GameOver();
         }
-
-        // if (col.gameObject.CompareTag("Enemy 1"))
-        // {
-        //     enemyBehaviour enemyScript = col.gameObject.GetComponent<enemyBehaviour>(); 
-        //     enemyScript.TakeDamage(attackDamage);
-        //     Debug.Log("damage to enemy:" + attackDamage);
-        // }
     }
-
     public void SavePlayerAtCheckPoint()
     {
         SaveSystem.SavePlayer(this);
     }
-
     public void LoadPlayerSave()
     {
         PlayerData playerData = SaveSystem.LoadPlayer();
